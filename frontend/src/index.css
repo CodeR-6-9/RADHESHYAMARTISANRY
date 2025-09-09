@@ -1,0 +1,20 @@
+/* --- Basic Setup & Background --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* 1. New URL for a beige/light wood texture */
+    background-image: url('https://www.transparenttextures.com/patterns/light-wood.png');
+    /* 2. New fallback color to match */
+    background-color: #ffefdd; /* Beige */
+    color: #333;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

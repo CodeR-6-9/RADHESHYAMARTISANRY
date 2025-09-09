@@ -1,0 +1,109 @@
+.main-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.my-photo {
+  width: 750px;
+  height: auto;
+  margin-left: 5%;
+  border-radius: 10px;
+
+/* Fade is deeper and starts earlier at 40% */
+    -webkit-mask-image: linear-gradient(to right, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-image: linear-gradient(to right, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+
+    object-fit: cover;
+
+}
+.rt{
+    margin-left: -8%;
+      /* --- Add these two lines --- */
+    position: relative;
+    z-index: 1;
+    /* -------------------------- */
+
+    
+    /* --- Add these two lines --- */
+    position: relative;
+    z-index: 1;
+    /* -------------------------- */
+      color: #483426;
+
+    
+}
+.right-text {
+  /* Pulls the text leftwards */
+  margin-top: -8%;
+
+ /* Optional styling */
+  font-size: 510%;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  letter-spacing: -4px;
+
+}
+.right-text2 {
+  /* Pulls the text leftwards */
+  margin-top: -5%;
+ /* Optional styling */
+  font-size: 510%;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  letter-spacing: -4px;
+
+}
+.right-text3 {
+    margin-top: 1%;
+  font-size: 165%;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  display: block;
+  letter-spacing: -1.8px;
+}
+.right-text4 {
+  font-size: 165%;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  display: block;
+  letter-spacing: -1.8px;
+
+}
+
+
+
+.navi {
+    margin-top: 6.7%;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.feat {
+  border-width: 3px;
+  border-style: solid;
+  border-color: #483426; 
+  display: block;  
+  padding: 4px 18px;  
+  color: #483426;
+  border-radius: 40px; 
+  transition: background 0.2s, color 0.2s; 
+}
+
+.feat:hover {
+  background-color: #483426;
+  color:  #ffefdd;      
+  border-radius: 40px; 
+}
+
+

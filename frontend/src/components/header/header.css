@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+
+.discount-banner {
+    background-color: #FFDAB9;
+    color: #4a3728;
+    text-align: center;
+    padding: 12px 10px;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+/* --- Header --- */
+header {
+    background-color: #ffefdd; 
+    padding: 7px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 0px 5px rgba(0,0,0,0.1);
+}
+
+
+
+/* --- logo and text --- */
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.logo-text {
+  text-align: right;
+  letter-spacing: 0.5px;
+  color: #483426;
+  margin-left: 10px;
+  display: inline-block; 
+  line-height: 0.58;
+}
+.first-letter {
+  font-family: 'Allura', cursive;
+  font-size: 4rem;
+  font-weight: 50;
+}
+.l1 {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0; 
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+}
+
+.l2 {
+  font-size: 1.1rem;
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 200;
+}
+
+
+/* --- Navigation --- */
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+  display: block;  
+  padding: 8px 15px;  
+  text-decoration: none; 
+  color: #483426;
+  border-radius: 20px; 
+  transition: background 0.2s, color 0.2s; 
+}
+
+nav a:hover {
+  background-color: #483426;
+  color:  #ffefdd;      
+  border-radius: 20px; 
+}
