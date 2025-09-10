@@ -1,68 +1,90 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display&display=swap');
 
+/* --- CSS Variables (from your existing code) --- */
+:root {
+  --primary-color: #5b9bd5;
+  --accent-color: #2e8b57;
+  --text-color: #483426;
+  --light-gray: #aaa;
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  --card-shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+  --card-radius: 15px;
+}
 
+/* --- Discount Banner (no changes) --- */
 .discount-banner {
-    background-color: #FFDAB9;
-    color: #4a3728;
-    text-align: center;
-    padding: 12px 10px;
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
+  background-color: #FFDAB9;
+  color: #4a3728;
+  text-align: center;
+  padding: 12px 10px;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
 }
 
-/* --- Header --- */
+/* --- Enhanced Fixed Header --- */
 header {
-    background-color: #ffefdd; 
-    padding: 7px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 0px 5px rgba(0,0,0,0.1);
+  /* CHANGE: Using a semi-transparent color for the glass effect */
+  background-color: rgba(255, 239, 221, 0.85); 
+  /* CHANGE: Added for a modern "frosted glass" look */
+  backdrop-filter: blur(10px);
+  
+  /* CHANGE: Increased vertical padding for better spacing */
+  padding: 15px 5%;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1000; /* Cleaned up duplicate z-index */
+  
+  /* CHANGE: Softer, more subtle shadow for depth */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  flex-wrap: wrap; 
 }
 
-
-
-/* --- logo and text --- */
-
+/* --- Logo and Text Styles --- */
 .logo a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .logo img {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  /* CHANGE: A subtle border makes the logo pop */
+  border: 2px solid var(--text-color);
 }
 
+/* Logo text styles are fine, no changes needed */
 .logo-text {
   text-align: right;
   letter-spacing: 0.5px;
-  color: #483426;
+  color: var(--text-color);
   margin-left: 10px;
   display: inline-block; 
   line-height: 0.58;
 }
 .first-letter {
   font-family: 'Allura', cursive;
-  font-size: 4rem;
+  font-size: clamp(2.5rem, 8vw, 4rem); 
   font-weight: 50;
 }
 .l1 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   display: block;
-  margin-bottom: 0; 
   font-family: "Playfair Display", serif;
   font-weight: 400;
 }
-
 .l2 {
   font-size: 1.1rem;
   display: block;
@@ -70,26 +92,64 @@ header {
   font-weight: 200;
 }
 
-
-/* --- Navigation --- */
-
+/* --- Enhanced Navigation Styles --- */
 nav ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
-  display: block;  
+  display: block;   
   padding: 8px 15px;  
   text-decoration: none; 
-  color: #483426;
+  color: var(--text-color);
   border-radius: 20px; 
-  transition: background 0.2s, color 0.2s; 
+  transition: all 0.3s ease; /* CHANGE: Transition 'all' for smoother effects */
+  /* CHANGE: Bolder text for better readability */
+  font-weight: 500; 
 }
 
+/* CHANGE: More dynamic hover effect */
 nav a:hover {
-  background-color: #483426;
-  color:  #ffefdd;      
-  border-radius: 20px; 
+  background-color: var(--text-color);
+  color:  #ffefdd;        
+  border-radius: 20px;
+  /* Adds a "lift" effect on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* NEW: Style for the current/active page link */
+nav a.current-page {
+  background-color: var(--text-color);
+  color: #ffefdd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+
+
+/* --- Mobile-Only Styles --- */
+@media (max-width: 1350px) {
+
+  /* 1. Stacks the logo and navigation vertically */
+  header {
+    flex-direction: column;
+    gap: 15px; /* Adds some space between the logo and the nav bar */
+  }
+
+  nav ul {
+    justify-content: center; /* Keeps the items centered */
+    gap: 10px;                 /* CHANGED: Reduces space between items */
+    /* REMOVED: flex-wrap: wrap; was removed to prevent going to the next line */
+  }
+
+  nav a {
+    font-size: 0.85rem;      /* CHANGED: Made text slightly smaller */
+    padding: 6px 10px;       /* CHANGED: Reduced padding to make links more compact */
+  }
+  
+  /* ... your other mobile styles ... */
 }

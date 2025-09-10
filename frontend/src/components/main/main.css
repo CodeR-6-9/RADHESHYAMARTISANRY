@@ -1,109 +1,198 @@
-.main-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
+/* --- main.css --- */
+:root {
+  --primary-color: #5b9bd5;
+  --accent-color: #2e8b57;
+  --text-color: #483426;
+  --light-gray: #aaa;
+  --card-bg: #FFFFFF;
+  --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  --card-shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+  --card-radius: 25px;
+}
+
+/* --- Hero Section Styles --- */
+.hero-section {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    z-index: -1;
+    padding: 90px 5% 40px;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .my-photo {
-  width: 750px;
+  width: 55%;
   height: auto;
-  margin-left: 5%;
   border-radius: 10px;
-
-/* Fade is deeper and starts earlier at 40% */
-    -webkit-mask-image: linear-gradient(to right, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    mask-image: linear-gradient(to right, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
-
-    object-fit: cover;
-
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+  mask-image: linear-gradient(to right, black 60%, transparent 100%);
 }
-.rt{
-    margin-left: -8%;
-      /* --- Add these two lines --- */
-    position: relative;
-    z-index: 1;
-    /* -------------------------- */
 
-    
-    /* --- Add these two lines --- */
-    position: relative;
-    z-index: 1;
-    /* -------------------------- */
-      color: #483426;
-
-    
+.rt {
+  margin-left: -8%;
+  position: relative;
+  z-index: 1;
+  color: var(--text-color);
 }
-.right-text {
-  /* Pulls the text leftwards */
-  margin-top: -8%;
 
- /* Optional styling */
-  font-size: 510%;
+.right-text, .right-text2 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
   display: block;
-  letter-spacing: -4px;
-
+  letter-spacing: -0.05em;
+  line-height: 1.1;
 }
-.right-text2 {
-  /* Pulls the text leftwards */
-  margin-top: -5%;
- /* Optional styling */
-  font-size: 510%;
-  font-weight: 500;
-  font-family: 'Poppins', sans-serif;
-  display: block;
-  letter-spacing: -4px;
 
-}
-.right-text3 {
-    margin-top: 1%;
-  font-size: 165%;
+.right-text { margin-top: -8%; }
+.right-text2 { margin-top: -3%; }
+
+.right-text3, .right-text4 {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   font-weight: 400;
   font-family: 'Inter', sans-serif;
   display: block;
-  letter-spacing: -1.8px;
-}
-.right-text4 {
-  font-size: 165%;
-  font-weight: 400;
-  font-family: 'Inter', sans-serif;
-  display: block;
-  letter-spacing: -1.8px;
-
+  letter-spacing: -0.05em;
+  max-width: 50ch;
 }
 
-
+.right-text3 { margin-top: 1rem; }
 
 .navi {
-    margin-top: 6.7%;
+  margin-top: 40px;
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  padding: 0;
 }
 
 .feat {
-  border-width: 3px;
-  border-style: solid;
-  border-color: #483426; 
-  display: block;  
-  padding: 4px 18px;  
-  color: #483426;
-  border-radius: 40px; 
-  transition: background 0.2s, color 0.2s; 
+  border: 3px solid var(--text-color);
+  padding: 4px 18px;
+  color: var(--text-color);
+  border-radius: 40px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
 }
 
 .feat:hover {
-  background-color: #483426;
-  color:  #ffefdd;      
-  border-radius: 40px; 
+  background-color: var(--text-color);
+  color: #ffefdd;
 }
 
 
+
+
+/* --- Product Grid Styles --- */
+main {
+  padding: 40px 5%;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.product-card {
+  flex: 0 1 430px; 
+  
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px); 
+  box-shadow: var(--card-shadow-hover);
+}
+
+.product-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  /* Changed to a landscape aspect ratio */
+  aspect-ratio: 16 / 9;
+}
+.product-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  color: white;
+  text-align: left;
+  
+  /*This gradient ensures text is always readable on any image */
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+}
+
+.product-info h3 {
+  font-size: 1.7rem; /* First line is bigger */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 430;
+  margin: 0 0 5px 0;
+  color: white;
+}
+
+.product-details {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+
+
+/* --- Styles for Mobile --- */
+@media (max-width: 1372px) {
+  .hero-section {
+    flex-direction: column;
+  }
+  .my-photo {
+    width: 100%;
+    margin-bottom: -15%;
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  }
+ .right-text, .right-text2 {
+  text-align: center;
+  /*
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: rgb(10, 1, 1);
+  */
+}
+
+
+.right-text3, .right-text4 {
+  text-align: center;
+  /*
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(10, 1, 1);
+  */
+}
+  .rt {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    
+    text-align: center;
+    padding: 25px;
+    border-radius: var(--card-radius);
+  }
+  nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+}
