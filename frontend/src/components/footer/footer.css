@@ -1,0 +1,49 @@
+.info-section {
+    padding: 60px 5%;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+    /* Animation setup */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* This class will be added by JavaScript when the element is in view */
+.info-row.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* This rule reverses the order for the second row */
+.info-row:nth-child(2) {
+    flex-direction: row-reverse;
+}
+
+.info-text, .info-image {
+    flex: 1; /* Each part takes up 50% of the space */
+}
+
+.info-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #2c6a6d;
+    margin-bottom: 15px;
+}
+
+.info-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+}
+
+.info-image img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: block;
+}

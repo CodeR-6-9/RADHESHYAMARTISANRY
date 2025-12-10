@@ -1,0 +1,268 @@
+/* --- Global Container --- */
+.main-container {
+  /* Fix overlap with header */
+  padding: 140px 5% 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  /* FORCE inherit color: This ensures all text defaults to your brown */
+  color: var(--text-color);
+}
+
+@media (max-width: 1372px) {
+  .main-container {
+    padding-top: 200px;
+  }
+}
+
+/* --- Layout Grid --- */
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 60px; /* Increased gap for better breathing room */
+}
+
+@media (min-width: 1024px) {
+  .page-layout {
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: start;
+  }
+}
+
+/* --- Images --- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  display: block;
+}
+
+/* --- TYPOGRAPHY FIXES (Right Column) --- */
+
+/* 1. Main Title: Bigger and strictly brown */
+.header-row h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 3rem; /* Increased from 2.5rem */
+  margin-bottom: 10px;
+  line-height: 1.1;
+  color: var(--text-color);
+}
+
+/* 2. Reviews: Smaller, lighter weight */
+.reviews {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  margin-bottom: 25px;
+  font-weight: 400;
+  color: var(--text-color);
+}
+
+/* 3. Description: Increased line-height for readability */
+.description {
+  font-family: "Inter", sans-serif;
+  line-height: 1.8; /* More airy */
+  font-size: 1.05rem;
+  margin-bottom: 35px;
+  opacity: 0.9;
+  color: var(--text-color);
+}
+
+/* --- Selectors --- */
+.selector-group {
+  margin-bottom: 30px;
+}
+
+.label {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: block;
+  font-size: 1.1rem; /* Slightly larger label */
+  color: var(--text-color);
+}
+
+/* Swatches */
+.swatches {
+  display: flex;
+  gap: 15px;
+}
+.swatch {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.swatch:hover {
+  transform: scale(1.1);
+}
+.swatch.active {
+  border: 3px solid var(--text-color);
+}
+
+/* Size Header */
+.size-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-color);
+}
+
+/* 4. Dropdown: Fix font inside the box */
+.size-dropdown {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: 2px solid var(--text-color);
+  background-color: transparent;
+
+  /* CRITICAL: Dropdowns don't inherit font/color by default */
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  color: var(--text-color);
+
+  cursor: pointer;
+}
+
+/* --- Button --- */
+.add-to-bag-btn {
+  width: 100%;
+  padding: 20px; /* Bigger touch target */
+  margin-top: 10px;
+  background-color: var(--text-color);
+  color: #ffefdd;
+  border: none;
+  border-radius: 40px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--card-shadow);
+}
+
+.add-to-bag-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* ... existing styles ... */
+
+/* --- Related Products Section --- */
+.related-section {
+  margin-top: 100px;
+  border-top: 1px solid #eee;
+  padding-top: 50px;
+}
+
+.related-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.related-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.related-card:hover {
+  transform: translateY(-5px);
+}
+
+.related-img-box {
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Portrait shape for products */
+  overflow: hidden;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.related-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.related-card:hover img {
+  transform: scale(1.05); /* Subtle zoom on hover */
+}
+
+.related-card h4 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  margin: 0 0 5px 0;
+  color: var(--text-color);
+}
+
+.related-card p {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  color: #888;
+  margin: 0;
+}
+.read-more-btn {
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 8px;
+  color: var(--text-color);
+}
+.read-more-btn:hover {
+  opacity: 0.7;
+}
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+  /* 1. Shrink the huge title on phones */
+  .header-row h1 {
+    font-size: 2rem; /* Down from 3rem */
+  }
+
+  /* 2. Fix Gallery Gap */
+  .gallery-grid {
+    gap: 10px; /* Tighter spacing for images */
+  }
+
+  /* 3. Force 2-Column Layout for Related Products */
+  .related-grid {
+    display: grid;
+    /* Force 2 equal columns instead of the 250px minimum */
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .related-img-box {
+    margin-bottom: 10px;
+    border-radius: 10px; /* Slightly smaller radius */
+  }
+
+  .related-card h4 {
+    font-size: 0.95rem; /* readable size */
+  }
+
+  /* 4. Adjust Breathing Room */
+  .related-section {
+    margin-top: 60px;
+    padding-top: 30px;
+  }
+}

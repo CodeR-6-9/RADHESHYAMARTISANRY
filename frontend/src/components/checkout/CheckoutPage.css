@@ -1,0 +1,265 @@
+/* --- Global Container --- */
+.checkout-container {
+  /* Pushing content down to clear the fixed header */
+  padding: 140px 5% 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  /* Inherit the brown theme color */
+  color: var(--text-color);
+}
+
+/* Mobile Header Adjustment (Matches your other pages) */
+@media (max-width: 1372px) {
+  .checkout-container {
+    padding-top: 200px;
+  }
+}
+
+/* --- Layout Grid --- */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+}
+
+@media (min-width: 900px) {
+  .checkout-layout {
+    grid-template-columns: 1.5fr 1fr; /* Form is wider, Summary is narrower */
+    align-items: start;
+  }
+
+  /* Keeps the summary visible while scrolling on desktop */
+  .sidebar {
+    position: sticky;
+    top: 150px;
+  }
+}
+
+/* --- Typography --- */
+.page-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 3rem;
+  font-weight: 500;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+/* --- Form Elements (Matches ProductPage inputs) --- */
+.form-section {
+  margin-bottom: 40px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  font-family: "Poppins", sans-serif; /* Consistent with your labels */
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.input-field {
+  width: 100%;
+  padding: 15px;
+
+  /* MATCHING YOUR THEME: Transparent bg + Brown Border */
+  background: transparent;
+  border: 2px solid var(--text-color);
+  border-radius: 15px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  color: var(--text-color);
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.input-field:focus {
+  /* Subtle highlight on focus */
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.input-field::placeholder {
+  color: var(--text-color);
+  opacity: 0.5;
+}
+
+.form-row-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* --- Pay Button (Matches Add to Bag) --- */
+.pay-button {
+  width: 100%;
+  padding: 20px;
+
+  background-color: var(--text-color);
+  color: #ffefdd; /* Beige text */
+
+  border: none;
+  border-radius: 40px; /* Pill shape */
+
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pay-button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* --- Summary Card (Right Col) --- */
+.summary-panel {
+  /* White card to pop against the beige background */
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: var(--card-radius); /* 25px */
+  box-shadow: var(--card-shadow);
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.item-image-box {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.item-image-box img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.qty-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--text-color);
+  color: #ffefdd;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.item-details {
+  flex: 1;
+  font-family: "Inter", sans-serif;
+}
+
+.item-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.item-variant {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+.item-price {
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+
+/* --- Cost Breakdown --- */
+.cost-breakdown {
+  margin-top: 20px;
+  font-family: "Inter", sans-serif;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.row.total {
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 1.4rem;
+  font-family: "Poppins", sans-serif;
+  opacity: 1;
+}
+
+/* Add this at the bottom of the file */
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b; /* Soft red */
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  padding: 0;
+  margin-top: 5px;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.remove-btn:hover {
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* ... existing styles ... */
+
+/* Empty State on Checkout Page */
+.empty-checkout {
+  min-height: 60vh; /* Make sure it takes up screen space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.empty-box h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.empty-box p {
+  font-family: "Inter", sans-serif;
+  color: #888;
+  margin-bottom: 20px;
+}

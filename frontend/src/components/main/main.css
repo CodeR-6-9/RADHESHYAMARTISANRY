@@ -4,21 +4,21 @@
   --accent-color: #2e8b57;
   --text-color: #483426;
   --light-gray: #aaa;
-  --card-bg: #FFFFFF;
-  --card-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  --card-shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
   --card-radius: 25px;
 }
 
 /* --- Hero Section Styles --- */
 .hero-section {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    z-index: -1;
-    padding: 90px 5% 40px;
-    box-sizing: border-box;
-    position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  z-index: -1;
+  padding: 90px 5% 40px;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .my-photo {
@@ -37,28 +37,42 @@
   color: var(--text-color);
 }
 
-.right-text, .right-text2 {
+.right-text,
+.right-text2 {
   font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   display: block;
   letter-spacing: -0.05em;
   line-height: 1.1;
 }
 
-.right-text { margin-top: -8%; }
-.right-text2 { margin-top: -3%; }
+.right-text {
+  margin-top: -8%;
+}
+.right-text2 {
+  margin-top: -3%;
+}
 
-.right-text3, .right-text4 {
+/* --- UPDATED: CENTERED GLOBALLY --- */
+.right-text3,
+.right-text4 {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
   font-weight: 400;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   display: block;
   letter-spacing: -0.05em;
   max-width: 50ch;
+
+  /* FIX: Centers text on ALL devices (Desktop & Mobile) */
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.right-text3 { margin-top: 1rem; }
+.right-text3 {
+  margin-top: 1rem;
+}
 
 .navi {
   margin-top: 40px;
@@ -78,15 +92,13 @@ nav ul {
   border-radius: 40px;
   transition: background 0.2s, color 0.2s;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .feat:hover {
   background-color: var(--text-color);
   color: #ffefdd;
 }
-
-
-
 
 /* --- Product Grid Styles --- */
 main {
@@ -101,17 +113,17 @@ main {
 }
 
 .product-card {
-  flex: 0 1 430px; 
-  
+  flex: 0 1 430px; /* Default Desktop Width */
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .product-card:hover {
-  transform: translateY(-5px); 
+  transform: translateY(-5px);
   box-shadow: var(--card-shadow-hover);
 }
 
@@ -120,9 +132,9 @@ main {
   height: 100%;
   display: block;
   object-fit: cover;
-  /* Changed to a landscape aspect ratio */
   aspect-ratio: 16 / 9;
 }
+
 .product-info {
   position: absolute;
   bottom: 0;
@@ -131,68 +143,112 @@ main {
   padding: 20px;
   color: white;
   text-align: left;
-  
-  /*This gradient ensures text is always readable on any image */
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 .product-info h3 {
-  font-size: 1.7rem; /* First line is bigger */
-  font-family: 'Poppins', sans-serif;
+  font-size: 1.7rem;
+  font-family: "Poppins", sans-serif;
   font-weight: 430;
   margin: 0 0 5px 0;
   color: white;
 }
 
 .product-details {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
   margin: 0;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 400;
 }
 
+/* --- RESPONSIVE STYLES --- */
 
-
-/* --- Styles for Mobile --- */
+/* 1. Tablet / Small Laptop (1372px) */
 @media (max-width: 1372px) {
   .hero-section {
     flex-direction: column;
+    padding-top: 130px;
   }
+
   .my-photo {
     width: 100%;
-    margin-bottom: -15%;
-    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    max-width: 600px;
+    margin-bottom: 20px;
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
   }
- .right-text, .right-text2 {
-  text-align: center;
-  /*
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: rgb(10, 1, 1);
-  */
-}
 
-
-.right-text3, .right-text4 {
-  text-align: center;
-  /*
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgb(10, 1, 1);
-  */
-}
   .rt {
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    
+    width: 100%;
+    margin-left: 0;
     text-align: center;
-    padding: 25px;
-    border-radius: var(--card-radius);
+    padding: 0 20px;
   }
+
+  /* Reset negative margins */
+  .right-text,
+  .right-text2 {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Note: right-text3/4 are already centered via base styles */
+
   nav ul {
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 20px;
+  }
+}
+
+/* 2. Mobile Phones (< 768px) */
+@media (max-width: 768px) {
+  .right-text,
+  .right-text2 {
+    /* FORCE ONE LINE & DYNAMIC SIZE */
+    white-space: nowrap;
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
+    line-height: 1.2;
+    margin-top: 5px;
+    width: 100%;
+    display: block;
+    text-align: center;
   }
 
+  .right-text3,
+  .right-text4 {
+    font-size: 0.95rem;
+    padding: 0 5px;
+  }
+
+  nav ul {
+    gap: 8px;
+  }
+
+  .feat {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-width: 2px;
+  }
+
+  .product-grid {
+    gap: 20px;
+  }
+
+  .product-card {
+    flex: 0 1 100%; /* Full Width as requested */
+  }
+
+  .product-card img {
+    aspect-ratio: 4 / 3;
+  }
+
+  main {
+    padding: 20px 5%;
+  }
 }

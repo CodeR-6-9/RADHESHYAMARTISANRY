@@ -1,0 +1,180 @@
+/* The dark background behind the drawer */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000; /* Super high so it sits on top */
+}
+
+/* The Drawer Panel */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  max-width: 85%;
+  height: 100%;
+  background: #fff; /* White background */
+  z-index: 2001; /* Higher than backdrop */
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+  color: var(--text-color);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Header */
+.drawer-header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.drawer-header h2 {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Items List (Scrollable) */
+.drawer-items {
+  flex: 1; /* Takes remaining space */
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.drawer-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f5f5f5;
+  padding-bottom: 20px;
+}
+
+.drawer-item img {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-info h4 {
+  margin: 0 0 5px 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+}
+
+.variant {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 0 5px 0;
+}
+
+.remove-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #ff6b6b;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Footer (Sticky at bottom) */
+.drawer-footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background: #fdfdfd;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--text-color);
+  color: #ffefdd;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* ... existing styles ... */
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+.qty-controls button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--text-color);
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.qty-controls span {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding-top: 50px;
+  opacity: 0.6;
+}
+
+.empty-state button {
+  margin-top: 15px;
+  background: none;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
