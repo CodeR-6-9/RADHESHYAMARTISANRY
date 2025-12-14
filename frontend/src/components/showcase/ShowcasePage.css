@@ -1,0 +1,301 @@
+/* --- CONTAINER --- */
+.showcase-container {
+  position: relative;
+  background-color: #fdfbf7; /* Very soft cream background */
+  min-height: 100vh;
+  padding-bottom: 100px; /* Space for footer/bar */
+}
+
+/* --- CLOSE BUTTON --- */
+.close-showcase {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white; /* Will change based on scroll via JS ideally, but white works for hero */
+  font-size: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-showcase:hover {
+  background: white;
+  color: black;
+  transform: rotate(90deg);
+}
+
+/* --- HERO SECTION --- */
+.showcase-hero {
+  position: relative;
+  height: 100vh; /* Full Screen */
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Subtle zoom animation on load */
+  animation: slowZoom 20s infinite alternate;
+}
+
+/* Gradient Overlay to make text readable */
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 60px;
+  left: 5%;
+  max-width: 800px;
+  color: white;
+  z-index: 2;
+}
+
+.collection-tag {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif; /* Or your main serif font */
+  font-size: 5rem;
+  line-height: 1;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.hero-price {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+
+/* --- DETAILS SECTION --- */
+.showcase-details {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 5%;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 80px;
+}
+
+.story-column h3,
+.selection-column h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.story-text {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: #483426;
+  margin-bottom: 50px;
+}
+
+.specs-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 30px;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.spec-item span {
+  font-size: 0.85rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.spec-item strong {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+/* --- STYLE SELECTOR (Editorial) --- */
+.editorial-style-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.editorial-style-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.editorial-style-card:hover,
+.editorial-style-card.active {
+  opacity: 1;
+}
+
+.editorial-style-card img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.style-name {
+  display: block;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+}
+
+.editorial-style-card.active img {
+  border: 2px solid #483426;
+  padding: 2px;
+}
+
+/* --- STICKY ACTION BAR --- */
+.sticky-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  padding: 20px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 900;
+}
+
+.sticky-action-bar.visible {
+  transform: translateY(0);
+}
+
+.bar-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.bar-price {
+  font-family: "Poppins", sans-serif;
+  color: #666;
+}
+
+.bar-btn {
+  background: #483426;
+  color: white;
+  padding: 15px 40px;
+  border-radius: 30px;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bar-btn:hover {
+  background: #2c1f16;
+}
+
+.mobile-static-action {
+  display: none;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes slowZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .story-text {
+    font-size: 1.2rem;
+  }
+
+  .sticky-action-bar {
+    display: none; /* Hide sticky bar on mobile, use static bottom btn */
+  }
+
+  .mobile-static-action {
+    display: block;
+    margin-top: 40px;
+  }
+
+  .full-width-btn {
+    width: 100%;
+    padding: 20px;
+    background: #483426;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-family: "Poppins", sans-serif;
+  }
+}

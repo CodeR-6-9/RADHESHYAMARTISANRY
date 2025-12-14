@@ -92,17 +92,17 @@ nav ul {
   gap: 30px;
   margin: 0;
   padding: 0;
-  /* FIX: Ensures all items (buttons and links) align vertically */
   align-items: center;
 }
 
-/* FIX: Apply styles to both 'nav a' AND '.cart-btn' */
+/* Buttons and Links - UPDATED to include .nav-icon-btn */
 nav a,
-.cart-btn {
-  /* FIX: Use flex to align the text and the badge icon inside the button */
+.cart-btn,
+.nav-icon-btn {
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between "Cart" text and the Number Badge */
+  justify-content: center;
+  gap: 8px;
 
   padding: 8px 15px;
   text-decoration: none;
@@ -111,18 +111,24 @@ nav a,
   transition: all 0.3s ease;
   font-weight: 500;
 
-  /* FIX: Ensure the div acts like a button */
   cursor: pointer;
   font-family: inherit;
   font-size: 1rem;
+  position: relative; /* Added for Badge Positioning */
+}
+
+/* Ensure SVG strokes transition smoothly */
+.cart-btn svg,
+.nav-icon-btn svg {
+  transition: stroke 0.3s ease;
 }
 
 /* Hover Effects */
 nav a:hover,
-.cart-btn:hover {
+.cart-btn:hover,
+.nav-icon-btn:hover {
   background-color: var(--text-color);
   color: #ffefdd;
-  border-radius: 20px;
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -134,76 +140,89 @@ nav a.current-page {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Mobile-Only Styles --- */
-@media (max-width: 1350px) {
-  header {
-    flex-direction: column;
-    gap: 15px;
-  }
+/* --- NEW: Cart Badge Style --- */
+.cart-badge {
+  background: #d4a373; /* Using a gold/accent tone to stand out */
+  color: #ffffff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  nav ul {
-    justify-content: center;
-    gap: 10px;
-  }
-
-  /* FIX: Apply mobile sizing to cart button too */
-  nav a,
-  .cart-btn {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-  }
+  /* Floating Position top-right of the icon */
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 2px solid #fff; /* Small white border helps it pop */
 }
 
-/* --- Mobile-Only Styles --- */
+/* --- Mobile-Only Styles (Tablets & Phones) --- */
 @media (max-width: 1350px) {
   /* 1. Stack Logo and Nav vertically */
   header {
     flex-direction: column;
-    gap: 10px;
-    padding: 10px 5%; /* Slightly less padding to save space */
+    gap: 15px;
+    padding: 15px 0;
+    align-items: center;
   }
 
-  /* 2. Force Navigation into a Single Line */
+  /* 2. Container takes full width, but centers the child */
+  nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 3. The List: FORCE CENTER */
   nav ul {
     display: flex;
-    justify-content: center; /* Center items */
-    gap: 8px; /* Tighter gap */
+    flex-direction: row;
+    align-items: center;
 
-    /* CRITICAL FIXES FOR SINGLE LINE */
-    flex-wrap: nowrap; /* Stops items from falling to next line */
-    width: 100%;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 0 10px;
 
-    /* Safety net: Allow horizontal scroll if screen is EXTREMELY small (e.g. Galaxy Fold) */
+    justify-content: center;
+    flex-wrap: nowrap !important;
+    gap: 15px; /* Keeps items spaced nicely */
+
+    max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-
-    /* Hide scrollbar for cleaner look */
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
+
   nav ul::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
   }
 
-  /* 3. Resize Buttons for Mobile */
+  /* 4. Resize Buttons */
   nav a,
-  .cart-btn {
-    font-size: 0.8rem; /* Smaller readable text */
-    padding: 6px 10px; /* Compact padding */
-    white-space: nowrap; /* Prevents "New Arrivals" from breaking into 2 lines */
-    flex-shrink: 0; /* Prevents buttons from getting crushed */
+  .cart-btn,
+  .nav-icon-btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    flex-shrink: 0;
   }
 }
 
-/* --- Tiny Screens (iPhone SE, older phones) --- */
-@media (max-width: 380px) {
+/* --- Tiny Screens (iPhone SE) --- */
+@media (max-width: 400px) {
   nav ul {
-    gap: 4px; /* Minimal gap */
-    justify-content: flex-start; /* Left align to allow scrolling if needed */
+    justify-content: flex-start;
+    padding-left: 15px;
   }
 
   nav a,
-  .cart-btn {
-    font-size: 0.75rem; /* Smallest readable size */
+  .cart-btn,
+  .nav-icon-btn {
+    font-size: 0.75rem;
     padding: 5px 8px;
+    gap: 5px;
   }
 }

@@ -12,11 +12,29 @@ const ContactPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ✅ WhatsApp Submit Handler
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send this to your backend
-    alert(`Thank you, ${formData.name}! We have received your message.`);
-    setFormData({ name: "", email: "", message: "" }); // Reset form
+
+    const phoneNumber = "917985642474"; // WhatsApp number (no +)
+
+    const message = `
+📩 *New Website Enquiry*
+
+👤 Name: ${formData.name}
+📧 Email: ${formData.email}
+
+📝 Message:
+${formData.message}
+    `;
+
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(whatsappUrl, "_blank");
+
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
@@ -33,23 +51,11 @@ const ContactPage = () => {
         <div className="info-card">
           <h3>Contact Information</h3>
 
-          {/* <div className="info-item">
-            <span className="icon">📍</span>
-            <div>
-              <h4>Visit Us</h4>
-              <p>
-                123 Artisan Street, Civil Lines
-                <br />
-                Prayagraj, UP, 211001
-              </p>
-            </div>
-          </div> */}
-
           <div className="info-item">
             <span className="icon">💌</span>
             <div>
               <h4>Email Us</h4>
-              <p>hello@radheshyam.com</p>
+              <p>radheshyamartisanry@gmail.com</p>
             </div>
           </div>
 
@@ -64,8 +70,14 @@ const ContactPage = () => {
           <div className="social-links">
             <p>Follow our journey:</p>
             <div className="social-icons">
-              <span>Instagram</span> • <span>Facebook</span> •{" "}
-              <span>Twitter</span>
+              <a
+                href="https://www.instagram.com/radheshyamartisanry/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link"
+              >
+                Instagram
+              </a>
             </div>
           </div>
         </div>
@@ -110,7 +122,7 @@ const ContactPage = () => {
             </div>
 
             <button type="submit" className="send-btn">
-              Send Message
+              Send Message on WhatsApp 💬
             </button>
           </form>
         </div>

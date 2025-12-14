@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  // Load cart from localStorage
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -10,19 +11,42 @@ export const CartProvider = ({ children }) => {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Save to localStorage whenever cart changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  // 1. IMPROVED: Add to Cart (Checks for duplicates)
   const addToCart = (product, color, size) => {
-    const newItem = {
-      ...product,
-      selectedColor: color,
-      selectedSize: size,
-      uniqueId: Date.now(),
-      quantity: 1, // 1. Start with 1
-    };
-    setCartItems([...cartItems, newItem]);
+    setCartItems((prevItems) => {
+      // Create a specific ID for this variation
+      // e.g. "101-Red-M" or "102-Blue-null"
+      const uniqueId = `${product.id}-${color}-${size || "default"}`;
+
+      // Check if this specific item is already in the cart
+      const existingItem = prevItems.find((item) => item.uniqueId === uniqueId);
+
+      if (existingItem) {
+        // If exists, just increase quantity
+        return prevItems.map((item) =>
+          item.uniqueId === uniqueId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // If new, add it
+        return [
+          ...prevItems,
+          {
+            ...product,
+            uniqueId, // Use the smart ID
+            selectedColor: color,
+            selectedSize: size,
+            quantity: 1,
+          },
+        ];
+      }
+    });
     setIsCartOpen(true);
   };
 
@@ -32,9 +56,8 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // 2. NEW: Update Quantity Function
   const updateQuantity = (uniqueId, newQuantity) => {
-    if (newQuantity < 1) return; // Prevent going below 1
+    if (newQuantity < 1) return;
 
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -43,16 +66,28 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // 3. Updated Total Calculation
+  // 2. NEW: Clear Cart (Needed for Checkout success)
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  // 3. UPDATED: Total Calculation (Free Shipping + 0 Tax)
   const getCartTotal = () => {
-    // Multiply price * quantity
     const subtotal = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
-    const shipping = subtotal > 0 ? 5.0 : 0;
-    const tax = subtotal * 0.08;
-    return { subtotal, shipping, tax, total: subtotal + shipping + tax };
+
+    // FIX: Hardcode these to 0 so the Checkout Total matches the Subtotal
+    const shipping = 0;
+    const tax = 0;
+
+    return {
+      subtotal,
+      shipping,
+      tax,
+      total: subtotal + shipping + tax,
+    };
   };
 
   return (
@@ -61,8 +96,9 @@ export const CartProvider = ({ children }) => {
         cartItems,
         addToCart,
         removeFromCart,
-        updateQuantity, // Export this
+        updateQuantity,
         getCartTotal,
+        clearCart, // Exporting this so CheckoutPage can use it
         isCartOpen,
         setIsCartOpen,
       }}

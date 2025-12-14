@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  z-index: -1;
+  z-index: 0;
   padding: 90px 5% 40px;
   box-sizing: border-box;
   position: relative;
@@ -74,30 +74,39 @@
   margin-top: 1rem;
 }
 
+/* --- NAVIGATION PILLS (HOME PAGE ONLY) --- */
 .navi {
   margin-top: 40px;
 }
 
-nav ul {
+/* FIX: Target specifically '.navi nav ul' so it wraps nicely */
+.navi nav ul {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 20px;
   padding: 0;
+
+  /* Allow wrapping on smaller desktop screens */
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Align left on desktop */
 }
 
 .feat {
-  border: 3px solid var(--text-color);
-  padding: 4px 18px;
+  border: 2px solid var(--text-color);
+  padding: 6px 20px;
   color: var(--text-color);
   border-radius: 40px;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.3s ease;
   cursor: pointer;
   white-space: nowrap;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
 }
 
 .feat:hover {
   background-color: var(--text-color);
   color: #ffefdd;
+  transform: translateY(-3px);
 }
 
 /* --- Product Grid Styles --- */
@@ -190,19 +199,15 @@ main {
     padding: 0 20px;
   }
 
-  /* Reset negative margins */
   .right-text,
   .right-text2 {
     margin-top: 10px;
     text-align: center;
   }
 
-  /* Note: right-text3/4 are already centered via base styles */
-
-  nav ul {
+  /* Center nav items on tablet */
+  .navi nav ul {
     justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
   }
 }
 
@@ -210,7 +215,6 @@ main {
 @media (max-width: 768px) {
   .right-text,
   .right-text2 {
-    /* FORCE ONE LINE & DYNAMIC SIZE */
     white-space: nowrap;
     font-size: clamp(1.5rem, 8vw, 2.5rem);
     line-height: 1.2;
@@ -226,14 +230,16 @@ main {
     padding: 0 5px;
   }
 
-  nav ul {
-    gap: 8px;
+  /* FIX: Force wrapping for Home Page Nav Pills */
+  .navi nav ul {
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap !important; /* Forces items to stack if needed */
   }
 
   .feat {
-    font-size: 0.8rem;
-    padding: 6px 12px;
-    border-width: 2px;
+    font-size: 0.85rem;
+    padding: 6px 16px;
   }
 
   .product-grid {
@@ -241,7 +247,7 @@ main {
   }
 
   .product-card {
-    flex: 0 1 100%; /* Full Width as requested */
+    flex: 0 1 100%;
   }
 
   .product-card img {
@@ -250,5 +256,105 @@ main {
 
   main {
     padding: 20px 5%;
+  }
+}
+
+/* --- OVERLAY POPUP STYLES --- */
+
+/* 1. The Dark Background */
+.overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 10000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 2. The Card (The Container) */
+.overlay-card {
+  background-color: #fff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  padding: 20px 10px 20px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+/* 3. The Close Icon (X) */
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--light-gray);
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  z-index: 2;
+}
+
+.close-icon:hover {
+  color: var(--text-color);
+  transform: scale(1.1);
+}
+
+/* 4. The Scrollable Area */
+.overlay-scroll-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.overlay-scroll-content h3 {
+  font-family: "Poppins", sans-serif;
+  color: #483426;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.overlay-scroll-content p {
+  font-family: "Inter", sans-serif;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}
+
+/* Custom Scrollbar Styling */
+.overlay-scroll-content::-webkit-scrollbar {
+  width: 6px;
+}
+.overlay-scroll-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.overlay-scroll-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+.overlay-scroll-content::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color);
+}
+
+/* Animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

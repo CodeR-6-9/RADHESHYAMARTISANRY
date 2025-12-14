@@ -1,17 +1,14 @@
 /* --- Global Container --- */
 .main-container {
-  /* Fix overlap with header */
   padding: 140px 5% 40px;
   max-width: 1400px;
   margin: 0 auto;
-
-  /* FORCE inherit color: This ensures all text defaults to your brown */
   color: var(--text-color);
 }
 
 @media (max-width: 1372px) {
   .main-container {
-    padding-top: 200px;
+    padding-top: 160px;
   }
 }
 
@@ -19,7 +16,8 @@
 .page-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 60px; /* Increased gap for better breathing room */
+  gap: 60px;
+  margin-bottom: 30px;
 }
 
 @media (min-width: 1024px) {
@@ -29,11 +27,15 @@
   }
 }
 
-/* --- Images --- */
+/* --- Gallery Grid --- */
 .gallery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+}
+
+.gallery-grid.single-view {
+  grid-template-columns: 1fr;
 }
 
 .image-wrapper img {
@@ -42,21 +44,19 @@
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
   display: block;
+  object-fit: cover;
 }
 
-/* --- TYPOGRAPHY FIXES (Right Column) --- */
-
-/* 1. Main Title: Bigger and strictly brown */
+/* --- TYPOGRAPHY (Right Column) --- */
 .header-row h1 {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
-  font-size: 3rem; /* Increased from 2.5rem */
+  font-size: 3rem;
   margin-bottom: 10px;
   line-height: 1.1;
   color: var(--text-color);
 }
 
-/* 2. Reviews: Smaller, lighter weight */
 .reviews {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
@@ -65,17 +65,61 @@
   color: var(--text-color);
 }
 
-/* 3. Description: Increased line-height for readability */
 .description {
   font-family: "Inter", sans-serif;
-  line-height: 1.8; /* More airy */
+  line-height: 1.8;
   font-size: 1.05rem;
   margin-bottom: 35px;
   opacity: 0.9;
   color: var(--text-color);
 }
 
-/* --- Selectors --- */
+/* Read More Link */
+.read-more-btn {
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 8px;
+  color: var(--text-color);
+}
+.read-more-btn:hover {
+  opacity: 0.7;
+}
+
+/* --- PRICE BLOCK --- */
+.price-block {
+  margin: 10px 0 5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.current-price {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #483426;
+  font-family: "Poppins", sans-serif;
+}
+
+.original-price {
+  font-size: 1.1rem;
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.discount-tag {
+  color: #d9534f;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tax-note {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 15px;
+}
+
+/* --- IMAGE-BASED STYLE SELECTOR (Flipkart Style) --- */
 .selector-group {
   margin-bottom: 30px;
 }
@@ -85,60 +129,67 @@
   font-weight: 600;
   margin-bottom: 12px;
   display: block;
-  font-size: 1.1rem; /* Slightly larger label */
+  font-size: 1.1rem;
   color: var(--text-color);
 }
 
-/* Swatches */
-.swatches {
+.style-image-grid {
   display: flex;
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
 }
-.swatch {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+
+.style-image-card {
+  position: relative;
+  width: 60px; /* Thumbnail width */
+  height: 75px; /* Thumbnail height */
   border: 1px solid #ddd;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s ease;
-}
-.swatch:hover {
-  transform: scale(1.1);
-}
-.swatch.active {
-  border: 3px solid var(--text-color);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  padding: 2px;
+  background-color: white;
 }
 
-/* Size Header */
-.size-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-family: "Inter", sans-serif;
-  font-size: 0.95rem;
-  color: var(--text-color);
-}
-
-/* 4. Dropdown: Fix font inside the box */
-.size-dropdown {
+.style-image-card img {
   width: 100%;
-  padding: 15px;
-  border-radius: 15px;
-  border: 2px solid var(--text-color);
-  background-color: transparent;
-
-  /* CRITICAL: Dropdowns don't inherit font/color by default */
-  font-family: "Poppins", sans-serif;
-  font-size: 1rem;
-  color: var(--text-color);
-
-  cursor: pointer;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
 }
 
-/* --- Button --- */
+.style-image-card:hover {
+  border-color: #aaa;
+}
+
+.style-image-card.active {
+  border: 2px solid #483426;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.selected-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #483426;
+  color: white;
+  font-size: 0.6rem;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 6px;
+  font-weight: bold;
+}
+
+/* --- ADD TO BAG BUTTON --- */
 .add-to-bag-btn {
   width: 100%;
-  padding: 20px; /* Bigger touch target */
+  padding: 20px;
   margin-top: 10px;
   background-color: var(--text-color);
   color: #ffefdd;
@@ -157,13 +208,53 @@
   box-shadow: var(--card-shadow-hover);
 }
 
-/* ... existing styles ... */
-
-/* --- Related Products Section --- */
-.related-section {
-  margin-top: 100px;
+/* --- MINIMALIST TRUST BADGES --- */
+.trust-badges-minimal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 25px;
   border-top: 1px solid #eee;
-  padding-top: 50px;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.tb-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.tb-icon {
+  font-size: 1.4rem;
+  opacity: 0.7;
+  filter: grayscale(100%);
+}
+
+.tb-text {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.tb-line {
+  width: 1px;
+  height: 30px;
+  background-color: #e5e5e5;
+}
+
+/* --- RELATED PRODUCTS --- */
+.related-section {
+  margin-top: 40px;
+  border-top: 1px solid #eee;
+  padding-top: 40px;
 }
 
 .related-title {
@@ -190,7 +281,7 @@
 
 .related-img-box {
   width: 100%;
-  aspect-ratio: 3 / 4; /* Portrait shape for products */
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: 15px;
   margin-bottom: 15px;
@@ -204,7 +295,7 @@
 }
 
 .related-card:hover img {
-  transform: scale(1.05); /* Subtle zoom on hover */
+  transform: scale(1.05);
 }
 
 .related-card h4 {
@@ -220,49 +311,83 @@
   color: #888;
   margin: 0;
 }
-.read-more-btn {
-  font-weight: 600;
+
+/* --- BREADCRUMBS --- */
+.breadcrumbs {
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 20px;
+}
+.breadcrumbs a {
+  text-decoration: none;
+  color: #555;
+  transition: color 0.2s;
+}
+.breadcrumbs a:hover {
+  color: #483426;
   text-decoration: underline;
-  cursor: pointer;
-  margin-left: 8px;
-  color: var(--text-color);
-}
-.read-more-btn:hover {
-  opacity: 0.7;
 }
 
-/* --- MOBILE OPTIMIZATION --- */
-@media (max-width: 768px) {
-  /* 1. Shrink the huge title on phones */
+/* --- DESKTOP VS MOBILE SELECTOR VISIBILITY --- */
+.mobile-style-selector {
+  display: none; /* Hidden by default on desktop */
+}
+
+.desktop-style-selector {
+  display: block; /* Visible by default on desktop */
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+/* --- MOBILE OPTIMIZATION (Combined & Fixed) --- */
+@media (max-width: 900px) {
+  /* 1. Remove the huge gap between Gallery, Selector, and Info */
+  .page-layout {
+    gap: 15px !important; /* Forces tighter spacing */
+    margin-bottom: 20px;
+  }
+
+  /* 2. Show Mobile Selector with zero extra margin */
+  .mobile-style-selector {
+    display: block;
+    margin: 0; /* Remove top/bottom margin */
+  }
+
+  /* 3. Hide Desktop Selector */
+  .desktop-style-selector {
+    display: none;
+  }
+
+  /* 4. Fix Title Spacing */
   .header-row h1 {
-    font-size: 2rem; /* Down from 3rem */
+    font-size: 1.8rem;
+    margin-top: 0;
+    line-height: 1.2;
   }
 
-  /* 2. Fix Gallery Gap */
+  /* 5. Tighter Gallery */
   .gallery-grid {
-    gap: 10px; /* Tighter spacing for images */
+    gap: 8px;
   }
 
-  /* 3. Force 2-Column Layout for Related Products */
+  /* 6. Related Products adjustments */
   .related-grid {
-    display: grid;
-    /* Force 2 equal columns instead of the 250px minimum */
     grid-template-columns: 1fr 1fr;
     gap: 15px;
   }
 
   .related-img-box {
     margin-bottom: 10px;
-    border-radius: 10px; /* Slightly smaller radius */
+    border-radius: 10px;
   }
 
   .related-card h4 {
-    font-size: 0.95rem; /* readable size */
+    font-size: 0.95rem;
   }
 
-  /* 4. Adjust Breathing Room */
   .related-section {
-    margin-top: 60px;
-    padding-top: 30px;
+    margin-top: 30px;
+    padding-top: 20px;
   }
 }

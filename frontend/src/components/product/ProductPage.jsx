@@ -1,82 +1,115 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { products } from "../../data/products";
 import "./ProductPage.css";
 
-// --- Sub-Components ---
-const ProductGallery = ({ images }) => {
+// --- Breadcrumbs ---
+const Breadcrumbs = ({ category, title }) => {
+  const catName = category.charAt(0).toUpperCase() + category.slice(1);
   return (
-    <div className="gallery-grid">
+    <div className="breadcrumbs">
+      <Link to="/">Home</Link> /
+      <Link to={`/category/${category}`}> {catName}</Link> /
+      <span> {title}</span>
+    </div>
+  );
+};
+
+// --- Gallery ---
+const ProductGallery = ({ images }) => {
+  if (!images || images.length === 0) return null;
+
+  return (
+    <div className={`gallery-grid ${images.length === 1 ? "single-view" : ""}`}>
       {images.map((imgSrc, index) => (
         <div key={index} className="image-wrapper">
-          <img src={imgSrc} alt={`View ${index + 1}`} />
+          <img src={imgSrc} alt={`Product View ${index + 1}`} />
         </div>
       ))}
     </div>
   );
 };
 
-const ColorSelector = ({ colors, selectedColor, onSelect }) => {
+// --- Style Selector ---
+const StyleSelector = ({ styles, selectedStyle, onSelect, productImages }) => {
+  if (!selectedStyle) return null;
+
   return (
     <div className="selector-group">
       <p className="label">
-        Color: <span>{selectedColor.name}</span>
+        Style: <span style={{ fontWeight: 600 }}>{selectedStyle.name}</span>
       </p>
-      <div className="swatches">
-        {colors.map((color) => (
-          <button
-            key={color.name}
-            style={{ backgroundColor: color.hex }}
-            className={`swatch ${
-              selectedColor.name === color.name ? "active" : ""
-            }`}
-            onClick={() => onSelect(color)}
-            aria-label={`Select ${color.name}`}
-          />
-        ))}
+
+      <div className="style-image-grid">
+        {styles.map((styleItem, index) => {
+          const displayImage =
+            (styleItem.images && styleItem.images[0]) ||
+            productImages[index % productImages.length];
+
+          return (
+            <div
+              key={styleItem.name}
+              className={`style-image-card ${
+                selectedStyle.name === styleItem.name ? "active" : ""
+              }`}
+              onClick={() => onSelect(styleItem)}
+              title={styleItem.name}
+            >
+              <img src={displayImage} alt={styleItem.name} />
+              {selectedStyle.name === styleItem.name && (
+                <div className="selected-overlay">✓</div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-const SizeSelector = ({ sizes, selectedSize, onSelect }) => {
-  return (
-    <div className="selector-group">
-      <div className="size-header">
-        <p>This runs big, we recommend sizing down.</p>
-        <span className="link">Size Guide</span>
-      </div>
-      <select
-        value={selectedSize}
-        onChange={(e) => onSelect(e.target.value)}
-        className="size-dropdown"
-      >
-        <option value="" disabled>
-          Select your size
-        </option>
-        {sizes.map((size) => (
-          <option key={size} value={size}>
-            {size}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-};
-
-// --- Related Products Component ---
-const RelatedProducts = ({ currentId }) => {
+// --- Related Products ---
+const RelatedProducts = ({ currentProduct }) => {
   const navigate = useNavigate();
 
-  // Filter out the current product
-  const related = products.filter((p) => p.id !== currentId);
+  const { displayProducts, sectionTitle } = useMemo(() => {
+    const TARGET_COUNT = 4;
+    let sameCategory = products.filter(
+      (p) =>
+        p.category === currentProduct.category && p.id !== currentProduct.id
+    );
+
+    sameCategory = sameCategory.sort(() => 0.5 - Math.random());
+
+    let finalSelection = [];
+    let title = `More from ${
+      currentProduct.category.charAt(0).toUpperCase() +
+      currentProduct.category.slice(1)
+    }`;
+
+    if (sameCategory.length >= 3) {
+      finalSelection = sameCategory.slice(0, TARGET_COUNT);
+    } else {
+      title = "You Might Also Like";
+      finalSelection = [...sameCategory];
+      let otherProducts = products.filter(
+        (p) => p.category !== currentProduct.category
+      );
+      otherProducts = otherProducts.sort(() => 0.5 - Math.random());
+      const needed = TARGET_COUNT - finalSelection.length;
+      finalSelection = [...finalSelection, ...otherProducts.slice(0, needed)];
+    }
+
+    return { displayProducts: finalSelection, sectionTitle: title };
+  }, [currentProduct]);
+
+  if (displayProducts.length === 0) return null;
 
   return (
     <div className="related-section">
-      <h3 className="related-title">You Might Also Like</h3>
+      <h3 className="related-title">{sectionTitle}</h3>
       <div className="related-grid">
-        {related.map((item) => (
+        {displayProducts.map((item) => (
           <div
             key={item.id}
             className="related-card"
@@ -86,7 +119,7 @@ const RelatedProducts = ({ currentId }) => {
               <img src={item.image} alt={item.title} />
             </div>
             <h4>{item.title}</h4>
-            <p>₹{item.price}</p>
+            <p>₹{item.price.toLocaleString("en-IN")}</p>
           </div>
         ))}
       </div>
@@ -94,45 +127,59 @@ const RelatedProducts = ({ currentId }) => {
   );
 };
 
-// --- UPDATED Info Panel (With Read More Logic) ---
-const ProductInfoPanel = ({ product }) => {
-  const [activeColor, setActiveColor] = useState(product.colors[0]);
-  const [activeSize, setActiveSize] = useState("");
-
-  // 1. NEW STATE: Track if description is open
+// --- Info Panel ---
+const ProductInfoPanel = ({ product, activeStyle, onStyleSelect }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    if (!activeSize) {
-      alert("Please select a size!");
-      return;
-    }
-    // Add to cart (Context handles drawer opening)
-    addToCart(product, activeColor.name, activeSize);
+    addToCart(product, activeStyle ? activeStyle.name : "Default", null);
   };
 
-  // 2. LOGIC: How to display the text
   const fullText = product.description;
-  const limit = 150; // Character limit
+  const limit = 150;
   const isLongText = fullText.length > limit;
-
-  // If expanded or short, show everything. Otherwise, slice it.
   const content =
     isExpanded || !isLongText ? fullText : fullText.slice(0, limit) + "...";
+
+  const discount = Math.round(
+    ((product.originalPrice - product.price) / product.originalPrice) * 100
+  );
 
   return (
     <section className="product-details">
       <div className="header-row">
         <h1>{product.title}</h1>
       </div>
+
+      <div className="price-block">
+        <span className="current-price">
+          ₹{product.price.toLocaleString("en-IN")}
+        </span>
+        <span className="original-price">
+          ₹{product.originalPrice.toLocaleString("en-IN")}
+        </span>
+        <span className="discount-tag">({discount}% OFF)</span>
+      </div>
+      <p className="tax-note">Inclusive of all taxes</p>
+
       <div className="reviews">
         ★★★★★{" "}
         <span className="review-count">{product.reviews.count} Reviews</span>
       </div>
 
-      {/* 3. UPDATED DESCRIPTION BLOCK */}
+      {/* UPDATED: Wrapped in desktop-only class */}
+      {product.styles && (
+        <div className="desktop-style-selector">
+          <StyleSelector
+            styles={product.styles}
+            selectedStyle={activeStyle}
+            onSelect={onStyleSelect}
+            productImages={product.images}
+          />
+        </div>
+      )}
+
       <p className="description">
         {content}
         {isLongText && (
@@ -145,53 +192,107 @@ const ProductInfoPanel = ({ product }) => {
         )}
       </p>
 
-      <ColorSelector
-        colors={product.colors}
-        selectedColor={activeColor}
-        onSelect={setActiveColor}
-      />
-      <SizeSelector
-        sizes={product.sizes}
-        selectedSize={activeSize}
-        onSelect={setActiveSize}
-      />
-
       <button className="add-to-bag-btn" onClick={handleAddToCart}>
-        Add to Bag ${product.price}
+        Add to Bag - ₹{product.price.toLocaleString("en-IN")}
       </button>
+
+      {/* Trust Badges */}
+      <div className="trust-badges-minimal">
+        <div className="tb-item">
+          <span className="tb-icon">📦</span>
+          <span className="tb-text">Free Shipping</span>
+        </div>
+        <div className="tb-line"></div>
+        <div className="tb-item">
+          <span className="tb-icon">🔒</span>
+          <span className="tb-text">Secure Checkout</span>
+        </div>
+        <div className="tb-line"></div>
+        <div className="tb-item">
+          <span className="tb-icon">✨</span>
+          <span className="tb-text">Authentic</span>
+        </div>
+      </div>
     </section>
   );
 };
 
-// --- Main Page Component ---
+// --- Main Component ---
 const ProductPage = () => {
   const { id } = useParams();
-
-  // SCROLL FIX: When ID changes, scroll to top
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
-
   const product = products.find((p) => p.id === parseInt(id));
+
+  // Initialize activeStyle safely
+  const [activeStyle, setActiveStyle] = useState(
+    product && product.styles ? product.styles[0] : null
+  );
+
+  const [currentGallery, setCurrentGallery] = useState(
+    product && product.images ? product.images : []
+  );
+
+  useEffect(() => {
+    if (product) {
+      window.scrollTo(0, 0);
+      setActiveStyle(product.styles ? product.styles[0] : null);
+      setCurrentGallery(product.images);
+    }
+  }, [id, product]);
+
+  const handleStyleSelect = (newStyle) => {
+    setActiveStyle(newStyle);
+    if (newStyle.images && newStyle.images.length > 0) {
+      setCurrentGallery(newStyle.images);
+    } else {
+      setCurrentGallery(product.images);
+    }
+  };
 
   if (!product) {
     return (
-      <div className="main-container" style={{ paddingTop: "150px" }}>
+      <div
+        className="main-container"
+        style={{ paddingTop: "150px", textAlign: "center" }}
+      >
         <h2>Product not found!</h2>
-        <button onClick={() => window.history.back()}>Go Back</button>
+        <button
+          className="add-to-bag-btn"
+          style={{ width: "200px" }}
+          onClick={() => window.history.back()}
+        >
+          Go Back
+        </button>
       </div>
     );
   }
 
   return (
     <div className="main-container">
+      <Breadcrumbs category={product.category} title={product.title} />
+
       <div className="page-layout">
-        <ProductGallery images={product.images} />
-        <ProductInfoPanel product={product} />
+        <ProductGallery images={currentGallery} />
+
+        {/* NEW: Mobile-Only Style Selector (Between Images and Info) */}
+        {product.styles && (
+          <div className="mobile-style-selector">
+            <StyleSelector
+              styles={product.styles}
+              selectedStyle={activeStyle}
+              onSelect={handleStyleSelect}
+              productImages={product.images}
+            />
+          </div>
+        )}
+
+        <ProductInfoPanel
+          product={product}
+          activeStyle={activeStyle}
+          onStyleSelect={handleStyleSelect}
+        />
       </div>
 
-      {/* Related Section */}
-      <RelatedProducts currentId={product.id} />
+      <RelatedProducts currentProduct={product} />
     </div>
   );
 };

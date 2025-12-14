@@ -1,0 +1,223 @@
+/* --- Global Layout --- */
+.category-page-container {
+  padding: 150px 8% 60px; /* Desktop Padding (Correct) */
+  min-height: 100vh;
+  background-color: #fffaf4;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* --- Header --- */
+.cat-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.breadcrumb {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8a7a6b;
+  cursor: pointer;
+  transition: color 0.3s;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.breadcrumb:hover {
+  color: #483426;
+}
+
+.cat-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  color: #483426;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.cat-subtitle {
+  font-family: "Inter", sans-serif;
+  color: #8a7a6b;
+  margin-top: 15px;
+  font-weight: 300;
+  font-size: 1.1rem;
+}
+
+/* --- The Vertical Grid --- */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 50px 30px;
+  padding-bottom: 40px;
+}
+
+/* --- Premium Vertical Card --- */
+.cat-card {
+  position: relative;
+  cursor: pointer;
+  group-hover: none;
+}
+
+/* 1. The Image Container (Tall & Vertical) */
+.image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.cat-card:hover .image-wrapper {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.cat-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.cat-card:hover img {
+  transform: scale(1.08);
+}
+
+/* 2. The "Shop Now" Button Overlay */
+.overlay-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: #483426;
+  font-weight: 600;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cat-card:hover .overlay-btn {
+  transform: translateY(0);
+}
+
+/* 3. Text Info (Below Image) */
+.info-section {
+  text-align: center;
+}
+
+.info-section h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: #483426;
+  margin: 0 0 5px;
+  font-weight: 500;
+}
+
+.price-tag {
+  font-family: "Inter", sans-serif;
+  color: #555;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.original-price {
+  color: #bbb;
+  text-decoration: line-through;
+  font-size: 0.85em;
+  margin-left: 10px;
+}
+
+/* --- Animation --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Mobile Responsiveness (Premium App-Like Feel) --- */
+@media (max-width: 768px) {
+  /* 1. Layout Adjustments */
+  .category-page-container {
+    /* FIX: INCREASED FROM 110px TO 200px */
+    padding: 160px 15px 40px;
+  }
+
+  /* 2. Header Scaling */
+  .cat-header {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .cat-title {
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+  }
+
+  .cat-subtitle {
+    font-size: 0.95rem;
+    max-width: 80%;
+    margin: 10px auto 0;
+  }
+
+  .breadcrumb {
+    font-size: 0.7rem;
+    margin-bottom: 10px;
+  }
+
+  /* 3. The Grid (2 Columns, Tight Gap) */
+  .cat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px 10px;
+  }
+
+  /* 4. Card Tweaks */
+  .image-wrapper {
+    margin-bottom: 12px;
+    border-radius: 8px;
+  }
+
+  /* 5. Typography Scaling for Cards */
+  .info-section h3 {
+    font-size: 1rem;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .price-tag {
+    font-size: 0.9rem;
+  }
+
+  /* 6. Interaction Polish */
+  .cat-card {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Hide the "View Details" slide-up button on mobile */
+  .overlay-btn {
+    display: none !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 360px) {
+  .cat-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

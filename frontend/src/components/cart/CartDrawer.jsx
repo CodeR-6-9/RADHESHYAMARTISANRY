@@ -4,7 +4,6 @@ import { useCart } from "../../context/CartContext";
 import "./CartDrawer.css";
 
 const CartDrawer = () => {
-  // 1. Get updateQuantity from Context
   const {
     isCartOpen,
     setIsCartOpen,
@@ -13,6 +12,7 @@ const CartDrawer = () => {
     updateQuantity,
     getCartTotal,
   } = useCart();
+
   const navigate = useNavigate();
   const totals = getCartTotal();
 
@@ -52,29 +52,44 @@ const CartDrawer = () => {
                 />
                 <div className="item-info">
                   <h4>{item.title}</h4>
+
+                  {/* Updated Variant Display */}
                   <p className="variant">
-                    {item.selectedColor} / {item.selectedSize}
+                    {item.selectedColor}
+                    {item.selectedSize ? ` / ${item.selectedSize}` : ""}
                   </p>
 
                   <div className="price-row">
                     <p className="price">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                     </p>
 
-                    {/* 2. Quantity Controls */}
-                    <div className="qty-controls">
+                    {/* Quantity Controls */}
+                    <div
+                      className="qty-controls"
+                      style={{
+                        marginTop: "0",
+                        background: "#f5f5f5",
+                        padding: "2px 5px",
+                      }}
+                    >
                       <button
                         onClick={() =>
                           updateQuantity(item.uniqueId, item.quantity - 1)
                         }
+                        disabled={item.quantity <= 1}
+                        style={{ fontSize: "1.2rem", padding: "0 8px" }}
                       >
                         -
                       </button>
-                      <span>{item.quantity}</span>
+                      <span style={{ fontSize: "0.9rem", fontWeight: "600" }}>
+                        {item.quantity}
+                      </span>
                       <button
                         onClick={() =>
                           updateQuantity(item.uniqueId, item.quantity + 1)
                         }
+                        style={{ fontSize: "1rem", padding: "0 8px" }}
                       >
                         +
                       </button>
@@ -96,16 +111,15 @@ const CartDrawer = () => {
         <div className="drawer-footer">
           <div className="total-row">
             <span>Subtotal:</span>
-            <span>${totals.subtotal.toFixed(2)}</span>
+            <span>₹{totals.subtotal.toLocaleString("en-IN")}</span>
           </div>
 
-          {/* 3. Disable Logic */}
           <button
             className="checkout-btn"
             onClick={handleCheckout}
-            disabled={cartItems.length === 0} // Logic to disable
+            disabled={cartItems.length === 0}
             style={{
-              opacity: cartItems.length === 0 ? 0.5 : 1,
+              opacity: cartItems.length === 0 ? 0.6 : 1,
               cursor: cartItems.length === 0 ? "not-allowed" : "pointer",
             }}
           >
