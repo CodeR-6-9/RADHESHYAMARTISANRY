@@ -13,7 +13,7 @@ const Order = require("./models/Order");
 const User = require("./models/User");
 const auth = require("./middleware/auth");
 const admin = require("./middleware/admin"); // <--- 1. ADDED ADMIN MIDDLEWARE
-const productRoutes = require("./routes/products");
+const productRoutes = require("./routes/Products");
 
 const app = express();
 app.use(express.json());
