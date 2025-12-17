@@ -18,16 +18,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-/* General Body Padding for Desktop Header */
-body {
-  /* padding-top: 80px; */
-}
-
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-  body {
-    /* padding-top: 70px; Space for Mobile Header */
-    padding-bottom: 70px; /* Space for Mobile Footer */
-  }
-}

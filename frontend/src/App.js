@@ -1,7 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+
+// Components
 import Header from "./components/header/header";
 import Main from "./components/main/main";
-import ProductPage from "./components/product/ProductPage"; // 1. Import it
+import ProductPage from "./components/product/ProductPage";
 import CheckoutPage from "./components/checkout/CheckoutPage";
 import CartDrawer from "./components/cart/CartDrawer";
 import ContactPage from "./components/contact/ContactPage";
@@ -14,11 +17,27 @@ import LoginPage from "./components/auth/LoginPage";
 import SignupPage from "./components/auth/SignupPage";
 import MyOrders from "./components/profile/MyOrders";
 import MobileFooter from "./components/MobileFooter/MobileFooter";
-import ScrollToTop from "./components/ScrollToTop";
+import ContactUs from "./components/legal/ContactUs";
+import ShippingPolicy from "./components/legal/ShippingPolicy";
+import RefundPolicy from "./components/legal/RefundPolicy";
+import Terms from "./components/legal/Terms";
+import PrivacyPolicy from "./components/legal/PrivacyPolicy";
+import Footer from "./components/footer/Footer";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   return (
     <div className="App">
+      <ScrollToTop />
       <Header />
       <CartDrawer />
       <Routes>
@@ -34,8 +53,14 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/my-orders" element={<MyOrders />} />
+        <Route path="/legal/contact" element={<ContactUs />} />
+        <Route path="/shipping-policy" element={<ShippingPolicy />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
       <MobileFooter />
+      <Footer />
     </div>
   );
 }

@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
-import {
-  Search,
-  ShoppingBag,
-  LogOut,
-  Package, // <--- Using the requested Package icon
-  Menu,
-  X,
-} from "lucide-react";
+import { Search, ShoppingBag, LogOut, Package, Menu, X } from "lucide-react";
 import logo1 from "../../assets/logo1.jpg";
 import SearchOverlay from "../search/SearchOverlay";
 import "./header.css";
@@ -21,10 +14,21 @@ function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // ⚠️ PASTE YOUR REAL PRODUCT ID HERE (Same one you used in MobileFooter)
+  // ⚠️ PASTE YOUR REAL PRODUCT ID HERE
   const NEW_ARRIVAL_ID = "694014facfde4a2b8c84b070";
 
-  // Helper to handle navigation from sidebar
+  // --- NEW: Handle Orders Click ---
+  const handleOrdersClick = () => {
+    setIsMenuOpen(false); // Close sidebar if open
+    if (user) {
+      navigate("/my-orders");
+    } else {
+      // The Logic: Prompt user then redirect
+      alert("Please log in to check your orders.");
+      navigate("/login");
+    }
+  };
+
   const handleMobileNav = (path) => {
     setIsMenuOpen(false);
     if (path) navigate(path);
@@ -36,7 +40,6 @@ function Header() {
     navigate("/");
   };
 
-  // Helper to safely get the first name or fallback
   const getFirstName = () => {
     if (user && user.name) {
       return user.name.split(" ")[0];
@@ -44,7 +47,6 @@ function Header() {
     return "User";
   };
 
-  // Helper to safely get the first initial or fallback
   const getUserInitial = () => {
     if (user && user.name) {
       return user.name.charAt(0).toUpperCase();
@@ -55,7 +57,7 @@ function Header() {
   return (
     <>
       <header className="main-header">
-        {/* --- 1. MOBILE MENU BUTTON (Left) --- */}
+        {/* --- 1. MOBILE MENU BUTTON --- */}
         <button
           className="icon-btn mobile-menu-trigger"
           onClick={() => setIsMenuOpen(true)}
@@ -64,7 +66,7 @@ function Header() {
           <Menu size={24} strokeWidth={2} />
         </button>
 
-        {/* --- 2. LOGO SECTION (Center on Mobile) --- */}
+        {/* --- 2. LOGO --- */}
         <div className="header-left">
           <Link to="/" className="brand-logo">
             <img src={logo1} alt="Radheshyam Artisanry" />
@@ -77,15 +79,14 @@ function Header() {
           </Link>
         </div>
 
-        {/* --- 3. DESKTOP NAV (Hidden on Mobile) --- */}
+        {/* --- 3. DESKTOP NAV --- */}
         <nav className="desktop-nav">
           <Link to="/">Home</Link>
-          {/* ⚡ FIXED LINK: Now uses the Real ID */}
           <Link to={`/showcase/${NEW_ARRIVAL_ID}`}>New Arrivals</Link>
           <Link to="/contact">Contact</Link>
         </nav>
 
-        {/* --- 4. ACTIONS SECTION --- */}
+        {/* --- 4. ACTIONS --- */}
         <div className="header-actions">
           <button
             className="icon-btn search-btn"
@@ -94,8 +95,8 @@ function Header() {
             <Search size={22} strokeWidth={2} />
           </button>
 
-          {/* Desktop Actions */}
           <div className="desktop-actions">
+            {/* Cart Button */}
             <button
               className="icon-btn cart-btn"
               onClick={() => setIsCartOpen(true)}
@@ -107,20 +108,19 @@ function Header() {
             </button>
 
             {user ? (
+              /* --- LOGGED IN USER --- */
               <div className="auth-group">
                 <span className="greeting">Hi, {getFirstName()}</span>
 
-                {/* ORDERS BUTTON (Using Package Icon) */}
                 <button
                   className="icon-btn-with-text"
-                  onClick={() => navigate("/my-orders")}
+                  onClick={handleOrdersClick}
                   title="My Orders"
                 >
                   <Package size={20} strokeWidth={2} />
                   <span>Orders</span>
                 </button>
 
-                {/* LOGOUT BUTTON */}
                 <button
                   className="icon-btn-with-text logout-btn"
                   onClick={handleLogout}
@@ -131,9 +131,24 @@ function Header() {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="login-link">
-                Login
-              </Link>
+              /* --- GUEST USER --- */
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "15px" }}
+              >
+                {/* Guest Orders Button (FIXED) */}
+                <button
+                  className="icon-btn-with-text"
+                  onClick={handleOrdersClick}
+                  title="Orders"
+                >
+                  <Package size={20} strokeWidth={2} />
+                  <span>Orders</span>
+                </button>
+
+                <Link to="/login" className="login-link">
+                  Login
+                </Link>
+              </div>
             )}
           </div>
         </div>
@@ -176,14 +191,11 @@ function Header() {
 
         {/* Navigation Links */}
         <nav className="sidebar-nav">
+          {/* ORDERS BUTTON: Now always visible */}
+          <button onClick={handleOrdersClick}>My Orders</button>
           <button onClick={() => handleMobileNav("/contact")}>
             Contact Us
           </button>
-          {user && (
-            <button onClick={() => handleMobileNav("/my-orders")}>
-              My Orders
-            </button>
-          )}
         </nav>
 
         {/* Logout Button (Bottom) */}

@@ -1,49 +1,84 @@
-.info-section {
-    padding: 60px 5%;
+/* =========================================
+   1. DESKTOP STYLES (Your current look)
+   ========================================= */
+.desktop-footer {
+  background-color: #1a1a1a; /* Dark Grey/Black */
+  color: #ffffff;
+  padding: 40px 20px 20px;
+  margin-top: 50px;
+  font-family: sans-serif;
 }
 
-.info-row {
-    display: flex;
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #444;
+  padding-bottom: 20px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  color: #e0b0ff; /* Light Purple accent */
+  margin-bottom: 15px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+/* =========================================
+   2. MOBILE STYLES (New!)
+   ========================================= */
+@media (max-width: 768px) {
+  /* 1. Enable the footer (remove display: none) */
+  .desktop-footer {
+    display: block !important;
+    padding: 30px 20px;
+    /* IMPORTANT: Add margin at bottom so it doesn't hide behind your Mobile Bottom Nav */
+    margin-bottom: 80px;
+  }
+
+  /* 2. Stack the columns vertically instead of side-by-side */
+  .footer-content {
+    flex-direction: column;
+    align-items: center; /* Center the boxes */
+    text-align: center; /* Center the text */
+    gap: 30px; /* Add space between sections */
+  }
+
+  /* 3. Center the links list */
+  .footer-links {
     align-items: center;
-    gap: 40px;
-    margin-bottom: 60px;
-    /* Animation setup */
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
+  }
 
-/* This class will be added by JavaScript when the element is in view */
-.info-row.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* This rule reverses the order for the second row */
-.info-row:nth-child(2) {
-    flex-direction: row-reverse;
-}
-
-.info-text, .info-image {
-    flex: 1; /* Each part takes up 50% of the space */
-}
-
-.info-text h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: #2c6a6d;
-    margin-bottom: 15px;
-}
-
-.info-text p {
+  /* 4. Adjust font sizes slightly for mobile */
+  .footer-section h3,
+  .footer-section h4 {
     font-size: 1.1rem;
-    line-height: 1.7;
-    color: #555;
-}
-
-.info-image img {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    display: block;
+    margin-bottom: 10px;
+  }
 }

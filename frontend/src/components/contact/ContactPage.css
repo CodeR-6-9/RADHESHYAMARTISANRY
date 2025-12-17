@@ -79,20 +79,36 @@
   line-height: 1.5;
 }
 
+/* --- UPDATED: Social Links Section --- */
 .social-links {
-  margin-top: 50px;
-  font-family: "Poppins", sans-serif;
+  display: flex; /* Align text and icon horizontally */
+  align-items: center; /* Center them vertically */
+  gap: 15px; /* Space between text and icon */
+  margin-top: 20px;
 }
 
-.social-icons span {
-  cursor: pointer;
-  font-weight: 600;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+.social-links p {
+  margin: 0; /* Remove margin to keep alignment perfect */
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
 }
 
-.social-icons span:hover {
-  border-bottom: 1px solid #ffefdd;
+.social-icons {
+  display: flex;
+  align-items: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #e1306c; /* Instagram Pink */
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.social-link:hover {
+  transform: scale(1.15); /* Slight zoom on hover */
+  color: #ff6b9d; /* Slightly lighter pink on hover */
 }
 
 /* --- Form Card (Right) --- */
@@ -152,13 +168,12 @@
   transform: translateY(-3px);
   box-shadow: var(--card-shadow-hover);
 }
+
 /* --- MOBILE OPTIMIZATION --- */
 @media (max-width: 768px) {
   /* 1. Adjust Top Spacing */
-  /* FIX: Increased from 110px to 180px. 
-     Since the header stacks vertically on mobile, it needs MORE space, not less. */
   .contact-container {
-    padding-top: 180px;
+    padding-top: 80px;
     padding-bottom: 40px;
   }
 

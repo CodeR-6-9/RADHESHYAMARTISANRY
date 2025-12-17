@@ -208,7 +208,7 @@ const AdminDashboard = () => {
                   </div>
                   <input
                     name="category"
-                    placeholder="Category (e.g., planter)"
+                    placeholder="Category (e.g., planter,hangings,home lable,jyoti holders)"
                     value={formData.category}
                     onChange={handleInputChange}
                     required

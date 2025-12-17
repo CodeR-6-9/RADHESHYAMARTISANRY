@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Instagram } from "lucide-react"; // 1. Import the icon
 import "./ContactPage.css";
 
 const ContactPage = () => {
@@ -70,13 +71,15 @@ ${formData.message}
           <div className="social-links">
             <p>Follow our journey:</p>
             <div className="social-icons">
+              {/* 2. Changed text to Icon here */}
               <a
                 href="https://www.instagram.com/radheshyamartisanry/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-link"
+                className="social-link instagram-icon-btn"
+                aria-label="Visit our Instagram" // Added for accessibility
               >
-                Instagram
+                <Instagram size={28} strokeWidth={2} />
               </a>
             </div>
           </div>
