@@ -1,114 +1,202 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import "./header.css";
+import { useAuth } from "../../context/AuthContext";
+import {
+  Search,
+  ShoppingBag,
+  LogOut,
+  Package, // <--- Using the requested Package icon
+  Menu,
+  X,
+} from "lucide-react";
 import logo1 from "../../assets/logo1.jpg";
-
-// 1. Import the Overlay Component
 import SearchOverlay from "../search/SearchOverlay";
+import "./Header.css";
 
-function Navitems({ children, to }) {
-  return (
-    <li>
-      <Link to={to}>{children}</Link>
-    </li>
-  );
-}
-
-// Navbar now accepts an 'openSearch' function as a prop
-function Navbar({ openSearch }) {
-  const { cartItems, setIsCartOpen } = useCart();
-
-  return (
-    <nav>
-      <ul>
-        <Navitems to="/">Home</Navitems>
-        <Navitems to="/showcase/1">New Arrivals</Navitems>
-        <Navitems to="/contact">Contact</Navitems>
-
-        {/* --- SEARCH ICON (Clicking this opens the overlay) --- */}
-        <li>
-          <div className="nav-icon-btn search-trigger" onClick={openSearch}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </div>
-        </li>
-
-        {/* --- CART ICON --- */}
-        <li>
-          <div
-            className="nav-icon-btn cart-btn"
-            onClick={() => setIsCartOpen(true)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="9" cy="21" r="1"></circle>
-              <circle cx="20" cy="21" r="1"></circle>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-            </svg>
-
-            {/* Cart Badge */}
-            {cartItems.length > 0 && (
-              <span className="cart-badge">{cartItems.length}</span>
-            )}
-          </div>
-        </li>
-      </ul>
-    </nav>
-  );
-}
-
-function Logotxt() {
-  return (
-    <div className="logo">
-      <Link to="/">
-        <img src={logo1} alt="RADHESHYAM ARTISANRY Logo" />
-        <span className="logo-text">
-          <span className="l1">
-            <span className="first-letter">R</span>ADHESHYAM
-          </span>
-          <span className="l2">ARTISANRY</span>
-        </span>
-      </Link>
-    </div>
-  );
-}
-
-// Main Header Component
 function Header() {
-  // State to control the Search Overlay
+  const { cartItems, setIsCartOpen } = useCart();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // ⚠️ PASTE YOUR REAL PRODUCT ID HERE (Same one you used in MobileFooter)
+  const NEW_ARRIVAL_ID = "694014facfde4a2b8c84b070";
+
+  // Helper to handle navigation from sidebar
+  const handleMobileNav = (path) => {
+    setIsMenuOpen(false);
+    if (path) navigate(path);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
+    navigate("/");
+  };
+
+  // Helper to safely get the first name or fallback
+  const getFirstName = () => {
+    if (user && user.name) {
+      return user.name.split(" ")[0];
+    }
+    return "User";
+  };
+
+  // Helper to safely get the first initial or fallback
+  const getUserInitial = () => {
+    if (user && user.name) {
+      return user.name.charAt(0).toUpperCase();
+    }
+    return "U";
+  };
 
   return (
     <>
-      <header>
-        <Logotxt />
-        {/* Pass the function to open search down to Navbar */}
-        <Navbar openSearch={() => setIsSearchOpen(true)} />
+      <header className="main-header">
+        {/* --- 1. MOBILE MENU BUTTON (Left) --- */}
+        <button
+          className="icon-btn mobile-menu-trigger"
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="Open Menu"
+        >
+          <Menu size={24} strokeWidth={2} />
+        </button>
+
+        {/* --- 2. LOGO SECTION (Center on Mobile) --- */}
+        <div className="header-left">
+          <Link to="/" className="brand-logo">
+            <img src={logo1} alt="Radheshyam Artisanry" />
+            <div className="logo-text">
+              <span className="l1">
+                <span className="first-letter">R</span>ADHESHYAM
+              </span>
+              <span className="l2">ARTISANRY</span>
+            </div>
+          </Link>
+        </div>
+
+        {/* --- 3. DESKTOP NAV (Hidden on Mobile) --- */}
+        <nav className="desktop-nav">
+          <Link to="/">Home</Link>
+          {/* ⚡ FIXED LINK: Now uses the Real ID */}
+          <Link to={`/showcase/${NEW_ARRIVAL_ID}`}>New Arrivals</Link>
+          <Link to="/contact">Contact</Link>
+        </nav>
+
+        {/* --- 4. ACTIONS SECTION --- */}
+        <div className="header-actions">
+          <button
+            className="icon-btn search-btn"
+            onClick={() => setIsSearchOpen(true)}
+          >
+            <Search size={22} strokeWidth={2} />
+          </button>
+
+          {/* Desktop Actions */}
+          <div className="desktop-actions">
+            <button
+              className="icon-btn cart-btn"
+              onClick={() => setIsCartOpen(true)}
+            >
+              <ShoppingBag size={22} strokeWidth={2} />
+              {cartItems.length > 0 && (
+                <span className="cart-badge">{cartItems.length}</span>
+              )}
+            </button>
+
+            {user ? (
+              <div className="auth-group">
+                <span className="greeting">Hi, {getFirstName()}</span>
+
+                {/* ORDERS BUTTON (Using Package Icon) */}
+                <button
+                  className="icon-btn-with-text"
+                  onClick={() => navigate("/my-orders")}
+                  title="My Orders"
+                >
+                  <Package size={20} strokeWidth={2} />
+                  <span>Orders</span>
+                </button>
+
+                {/* LOGOUT BUTTON */}
+                <button
+                  className="icon-btn-with-text logout-btn"
+                  onClick={handleLogout}
+                  title="Logout"
+                >
+                  <LogOut size={20} strokeWidth={2} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <Link to="/login" className="login-link">
+                Login
+              </Link>
+            )}
+          </div>
+        </div>
       </header>
 
-      {/* Render the Overlay outside the header (controlled by state) */}
+      {/* --- 5. MOBILE SIDEBAR --- */}
+      <div
+        className={`mobile-sidebar-overlay ${isMenuOpen ? "open" : ""}`}
+        onClick={() => setIsMenuOpen(false)}
+      />
+
+      <aside className={`mobile-sidebar ${isMenuOpen ? "open" : ""}`}>
+        <div className="sidebar-header">
+          <h3>Menu</h3>
+          <button className="icon-btn" onClick={() => setIsMenuOpen(false)}>
+            <X size={24} />
+          </button>
+        </div>
+
+        {/* Greeting Section */}
+        {user ? (
+          <div className="sidebar-user-card">
+            <div className="avatar-circle">{getUserInitial()}</div>
+            <div className="user-info">
+              <span className="welcome-text">Welcome back,</span>
+              <span className="user-name">{user.name || "User"}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="sidebar-auth-promo">
+            <p>Join us for exclusive offers!</p>
+            <button
+              className="sidebar-login-btn"
+              onClick={() => handleMobileNav("/login")}
+            >
+              Login / Register
+            </button>
+          </div>
+        )}
+
+        {/* Navigation Links */}
+        <nav className="sidebar-nav">
+          <button onClick={() => handleMobileNav("/contact")}>
+            Contact Us
+          </button>
+          {user && (
+            <button onClick={() => handleMobileNav("/my-orders")}>
+              My Orders
+            </button>
+          )}
+        </nav>
+
+        {/* Logout Button (Bottom) */}
+        {user && (
+          <div className="sidebar-footer">
+            <button className="sidebar-logout-btn" onClick={handleLogout}>
+              <LogOut size={18} />
+              <span>Log Out</span>
+            </button>
+          </div>
+        )}
+      </aside>
+
       <SearchOverlay
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 import "./CheckoutPage.css";
 
 // --- 1. Helper: Load Razorpay Script Dynamically ---
@@ -25,7 +26,6 @@ const InputField = ({
   required = true,
 }) => (
   <div className="input-group">
-    {/* Label is hidden via CSS, but kept for accessibility */}
     <label htmlFor={name} className="input-label">
       {label}
     </label>
@@ -46,7 +46,6 @@ const InputField = ({
 const WhatsAppModal = ({ isOpen, onClose, cartItems, total, formData }) => {
   if (!isOpen) return null;
 
-  // Your Business Number
   const phoneNumber = "917985642474";
 
   let message = `Hi, I tried to place an order on the website, but the server wasn't responding.\n\n`;
@@ -91,14 +90,12 @@ const WhatsAppModal = ({ isOpen, onClose, cartItems, total, formData }) => {
   );
 };
 
-// --- 4. Order Summary (Amazon-Style Accordion) ---
+// --- 4. Order Summary ---
 const OrderSummary = ({ cartItems, totals, onRemove, onUpdateQuantity }) => {
-  // State to handle mobile toggle
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="summary-panel">
-      {/* MOBILE TOGGLE HEADER (Visible only on Mobile via CSS) */}
       <div className="summary-mobile-toggle" onClick={() => setIsOpen(!isOpen)}>
         <div className="toggle-left">
           <span className="toggle-text">
@@ -113,15 +110,12 @@ const OrderSummary = ({ cartItems, totals, onRemove, onUpdateQuantity }) => {
         </div>
       </div>
 
-      {/* COLLAPSIBLE CONTENT CONTAINER */}
       <div className={`summary-content ${isOpen ? "expanded" : ""}`}>
-        {/* Desktop Title */}
         <h3 className="desktop-title">Order Summary</h3>
 
         <div className="cart-items">
           {cartItems.map((item) => (
             <div key={item.uniqueId || item.id} className="summary-item">
-              {/* Image Box */}
               <div className="item-image-box">
                 <img
                   src={Array.isArray(item.images) ? item.images[0] : item.image}
@@ -130,7 +124,6 @@ const OrderSummary = ({ cartItems, totals, onRemove, onUpdateQuantity }) => {
                 <span className="qty-badge-mobile">{item.quantity}</span>
               </div>
 
-              {/* Details & Qty Controls */}
               <div className="item-details">
                 <p className="item-name">{item.title}</p>
                 <p className="item-variant">
@@ -138,7 +131,6 @@ const OrderSummary = ({ cartItems, totals, onRemove, onUpdateQuantity }) => {
                   {item.selectedSize ? ` / ${item.selectedSize}` : ""}
                 </p>
 
-                {/* Quantity Controls */}
                 <div className="qty-controls">
                   <button
                     className="qty-btn"
@@ -168,7 +160,6 @@ const OrderSummary = ({ cartItems, totals, onRemove, onUpdateQuantity }) => {
                 </button>
               </div>
 
-              {/* Price */}
               <p className="item-price">
                 ₹{(item.price * item.quantity).toLocaleString("en-IN")}
               </p>
@@ -181,12 +172,10 @@ const OrderSummary = ({ cartItems, totals, onRemove, onUpdateQuantity }) => {
             <span>Subtotal</span>
             <span>₹{totals.subtotal.toLocaleString("en-IN")}</span>
           </div>
-
           <div className="row">
             <span>Shipping</span>
             <span style={{ color: "#2e8b57", fontWeight: "600" }}>Free</span>
           </div>
-
           <div className="row total">
             <span>Total</span>
             <span>₹{totals.total.toLocaleString("en-IN")}</span>
@@ -217,8 +206,6 @@ const CheckoutForm = ({
     <form className="checkout-form" onSubmit={handleSubmit}>
       <div className="form-section">
         <h2>Contact Information</h2>
-
-        {/* Full Width Inputs (Stacked) */}
         <InputField
           label="Full Name"
           name="name"
@@ -289,8 +276,17 @@ const CheckoutForm = ({
 const CheckoutPage = () => {
   const { cartItems, getCartTotal, removeFromCart, clearCart, updateQuantity } =
     useCart();
+  const { user } = useAuth();
   const totals = getCartTotal();
   const navigate = useNavigate();
+
+  // Protect Route Logic
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { state: { from: "/checkout" } });
+    }
+  }, [user, navigate]);
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [showWaModal, setShowWaModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -301,6 +297,18 @@ const CheckoutPage = () => {
     city: "",
     zip: "",
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.name || "",
+        email: user.email || "",
+      }));
+    }
+  }, [user]);
+
+  if (!user) return null;
 
   if (cartItems.length === 0) {
     return (
@@ -341,29 +349,44 @@ const CheckoutPage = () => {
       if (!order || !order.id) throw new Error("Invalid Order ID");
 
       const options = {
-        key: "YOUR_RAZORPAY_KEY_ID_HERE",
+        key: "rzp_test_Rro2KLBvLdpe9P", // Your Key ID
         amount: order.amount,
         currency: "INR",
         name: "Radheshyam Artisanry",
         description: "Handcrafted Luxury",
         order_id: order.id,
+
+        // --- UPDATED HANDLER TO SEND DATA TO DB ---
         handler: async function (response) {
           const verifyData = {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
+
+            cartItems: cartItems,
+            customerDetails: formData,
+            amount: totals.total,
+            // --- FIX IS HERE: Check both _id and id ---
+            userId: user ? user._id || user.id : null,
           };
-          const result = await fetch("http://localhost:5000/verify-payment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(verifyData),
-          });
-          const res = await result.json();
-          if (res.success) {
-            clearCart();
-            navigate("/success");
-          } else {
-            alert("Payment verification failed.");
+
+          try {
+            const result = await fetch("http://localhost:5000/verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(verifyData),
+            });
+            const res = await result.json();
+
+            if (res.success) {
+              clearCart();
+              navigate("/success");
+            } else {
+              alert("Payment verification failed.");
+            }
+          } catch (err) {
+            console.error("Verification API error:", err);
+            alert("Error verifying payment.");
           }
         },
         prefill: {
@@ -373,6 +396,7 @@ const CheckoutPage = () => {
         },
         theme: { color: "#483426" },
       };
+
       const rzp1 = new window.Razorpay(options);
       rzp1.on("payment.failed", function (response) {
         alert("Payment Failed: " + response.error.description);

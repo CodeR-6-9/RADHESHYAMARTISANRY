@@ -1,0 +1,70 @@
+/* src/components/auth/Auth.css */
+.auth-container {
+  min-height: 80vh; /* Takes up most of screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcfcfc;
+  padding-top: 100px; /* Space for fixed header */
+}
+
+.auth-form {
+  background: white;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px; /* concise width */
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.auth-form h2 {
+  font-family: "Playfair Display", serif;
+  margin-bottom: 25px;
+  color: #483426;
+  font-size: 2rem;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+  transition: border-color 0.2s;
+}
+
+.auth-form input:focus {
+  border-color: #483426;
+  outline: none;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 14px;
+  background-color: #483426;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.auth-form button:hover {
+  background-color: #5e4432;
+}
+
+.auth-form p {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  text-decoration: underline;
+}

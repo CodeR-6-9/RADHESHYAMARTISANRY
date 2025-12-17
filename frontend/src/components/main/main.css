@@ -16,7 +16,7 @@
   align-items: center;
   width: 100%;
   z-index: 0;
-  padding: 90px 5% 40px;
+  padding: 85px 5% 40px;
   box-sizing: border-box;
   position: relative;
 }
@@ -181,7 +181,7 @@ main {
 @media (max-width: 1372px) {
   .hero-section {
     flex-direction: column;
-    padding-top: 130px;
+    padding-top: 50px;
   }
 
   .my-photo {

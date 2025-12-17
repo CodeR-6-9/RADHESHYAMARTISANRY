@@ -1,6 +1,6 @@
 /* --- Global Container --- */
 .main-container {
-  padding: 140px 5% 40px;
+  padding: 100px 5% 40px;
   max-width: 1400px;
   margin: 0 auto;
   color: var(--text-color);
@@ -8,7 +8,7 @@
 
 @media (max-width: 1372px) {
   .main-container {
-    padding-top: 160px;
+    padding-top: 80px;
   }
 }
 
@@ -271,6 +271,7 @@
 }
 
 .related-card {
+  text-decoration: none; /* Removed default link underline */
   cursor: pointer;
   transition: transform 0.3s ease;
 }

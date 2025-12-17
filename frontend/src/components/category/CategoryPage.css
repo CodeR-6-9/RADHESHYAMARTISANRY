@@ -1,6 +1,6 @@
 /* --- Global Layout --- */
 .category-page-container {
-  padding: 150px 8% 60px; /* Desktop Padding (Correct) */
+  padding: 100px 8% 60px; /* Desktop Padding (Correct) */
   min-height: 100vh;
   background-color: #fffaf4;
   animation: fadeIn 0.8s ease-out;
@@ -155,7 +155,7 @@
   /* 1. Layout Adjustments */
   .category-page-container {
     /* FIX: INCREASED FROM 110px TO 200px */
-    padding: 160px 15px 40px;
+    padding: 90px 15px 40px;
   }
 
   /* 2. Header Scaling */

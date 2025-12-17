@@ -1,0 +1,75 @@
+.success-container {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding-top: 100px; /* Header space */
+}
+
+.success-card {
+  text-align: center;
+  padding: 40px;
+  max-width: 500px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #2e8b57; /* Green */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 20px rgba(46, 139, 87, 0.3);
+}
+
+.success-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.success-card h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  color: #483426;
+  margin-bottom: 15px;
+}
+
+.success-card p {
+  font-family: "Inter", sans-serif;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.home-btn {
+  padding: 15px 35px;
+  background-color: #483426;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.home-btn:hover {
+  transform: translateY(-3px);
+  background-color: #3a2a1e;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

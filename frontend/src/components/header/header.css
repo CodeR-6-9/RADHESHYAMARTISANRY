@@ -1,228 +1,468 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display&display=swap");
 
-/* --- CSS Variables --- */
 :root {
-  --primary-color: #5b9bd5;
-  --accent-color: #2e8b57;
-  --text-color: #483426;
-  --light-gray: #aaa;
-  --card-bg: #ffffff;
-  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
-  --card-radius: 15px;
+  --header-bg: rgba(255, 239, 221, 0.95);
+  --text-color: #483426; /* Dark Brown */
+  --accent-gold: #d4a373; /* Gold */
+  --cream-bg: #ffefdd; /* Light Beige */
+  --sidebar-width: 280px;
 }
 
-/* --- Discount Banner --- */
-.discount-banner {
-  background-color: #ffdab9;
-  color: #4a3728;
-  text-align: center;
-  padding: 12px 10px;
-  font-weight: 500;
-  font-size: 1rem;
-  letter-spacing: 0.5px;
-}
-
-/* --- Enhanced Fixed Header --- */
-header {
-  background-color: rgba(255, 239, 221, 0.85);
-  backdrop-filter: blur(10px);
-  padding: 15px 5%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* --- MAIN HEADER CONTAINER --- */
+.main-header {
   position: fixed;
-  width: 100%;
-  left: 0;
   top: 0;
-  z-index: 1000;
-
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: var(--header-bg);
+  backdrop-filter: blur(10px);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  flex-wrap: wrap;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  box-sizing: border-box;
 }
 
-/* --- Logo and Text Styles --- */
-.logo a {
+/* Hide Mobile Menu Trigger on Desktop */
+.mobile-menu-trigger {
+  display: none !important;
+  color: var(--text-color);
+}
+
+/* --- LOGO STYLING --- */
+.brand-logo {
   display: flex;
   align-items: center;
   text-decoration: none;
+  color: var(--text-color);
+  gap: 10px;
 }
-
-.logo img {
-  height: 60px;
-  width: 60px;
+.brand-logo img {
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   object-fit: cover;
-  display: block;
   border: 2px solid var(--text-color);
+  flex-shrink: 0;
 }
-
 .logo-text {
-  text-align: right;
-  letter-spacing: 0.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  line-height: 0.8;
   color: var(--text-color);
-  margin-left: 10px;
-  display: inline-block;
-  line-height: 0.58;
+}
+.l1 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
 }
 .first-letter {
   font-family: "Allura", cursive;
-  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-size: 2.5rem;
   font-weight: 50;
-}
-.l1 {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  display: block;
-  font-family: "Playfair Display", serif;
-  font-weight: 400;
+  margin-right: 1px;
 }
 .l2 {
-  font-size: 1.1rem;
-  display: block;
   font-family: "DM Sans", sans-serif;
-  font-weight: 200;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: -5px;
+  margin-left: 50px;
+  display: block;
 }
 
-/* --- Enhanced Navigation Styles --- */
-nav ul {
-  list-style: none;
+/* --- DESKTOP NAV (CENTERED + PILL STYLE) --- */
+.desktop-nav {
   display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-  align-items: center;
+  gap: 15px; /* Slightly reduced gap for the wider buttons */
+
+  /* ⚡ DEAD CENTER FIX */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  white-space: nowrap;
 }
 
-/* Buttons and Links - UPDATED to include .nav-icon-btn */
-nav a,
-.cart-btn,
-.nav-icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  padding: 8px 15px;
+/* The "Pill" Button Style */
+.desktop-nav a {
   text-decoration: none;
   color: var(--text-color);
-  border-radius: 20px;
-  transition: all 0.3s ease;
   font-weight: 500;
+  font-size: 0.95rem;
+  font-family: "DM Sans", sans-serif;
 
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 1rem;
-  position: relative; /* Added for Badge Positioning */
+  /* Button Shape */
+  border: 0px solid var(--text-color);
+  padding: 8px 24px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
 }
 
-/* Ensure SVG strokes transition smoothly */
-.cart-btn svg,
-.nav-icon-btn svg {
-  transition: stroke 0.3s ease;
-}
-
-/* Hover Effects */
-nav a:hover,
-.cart-btn:hover,
-.nav-icon-btn:hover {
+/* Hover Effect (Fill Brown, Text Cream) */
+.desktop-nav a:hover {
   background-color: var(--text-color);
   color: #ffefdd;
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(72, 52, 38, 0.15);
 }
 
-/* Active Page Style */
-nav a.current-page {
-  background-color: var(--text-color);
-  color: #ffefdd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+/* --- ACTIONS --- */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Spacious gap */
 }
 
-/* --- NEW: Cart Badge Style --- */
-.cart-badge {
-  background: #d4a373; /* Using a gold/accent tone to stand out */
-  color: #ffffff;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  font-size: 0.7rem;
-  font-weight: 700;
+.desktop-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Spacious gap */
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Floating Position top-right of the icon */
+  position: relative;
+  transition: transform 0.2s;
+}
+.icon-btn:hover {
+  transform: translateY(-2px);
+}
+.cart-badge {
   position: absolute;
+  top: -4px;
+  right: -6px;
+  background: var(--accent-gold);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 15px;
+  border-left: 1px solid rgba(72, 52, 38, 0.2);
+}
+.greeting {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-right: 5px;
+  font-family: "DM Sans", sans-serif;
+}
+.login-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  padding: 6px 16px;
+  border-radius: 20px;
+  transition: 0.3s;
+  font-family: "DM Sans", sans-serif;
+}
+.login-link:hover {
+  background: var(--text-color);
+  color: white;
+}
+
+/* =========================================
+   MOBILE SIDEBAR STYLES
+   ========================================= */
+
+.mobile-sidebar-overlay {
+  position: fixed;
   top: 0;
+  left: 0;
   right: 0;
-  border: 2px solid #fff; /* Small white border helps it pop */
+  bottom: 0;
+  background: rgba(72, 52, 38, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.mobile-sidebar-overlay.open {
+  opacity: 1;
+  visibility: visible;
 }
 
-/* --- Mobile-Only Styles (Tablets & Phones) --- */
-@media (max-width: 1350px) {
-  /* 1. Stack Logo and Nav vertically */
-  header {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px 0;
-    align-items: center;
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: #ffefdd;
+  z-index: 2001;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+.mobile-sidebar.open {
+  transform: translateX(0);
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+}
+.sidebar-header h3 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  color: var(--text-color);
+  font-size: 1.5rem;
+}
+
+/* User Card */
+.sidebar-user-card {
+  padding: 30px 25px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid rgba(72, 52, 38, 0.1);
+  margin-bottom: 10px;
+}
+.avatar-circle {
+  width: 55px;
+  height: 55px;
+  background: var(--text-color);
+  color: #ffefdd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-family: "Allura", cursive;
+  box-shadow: 0 4px 10px rgba(72, 52, 38, 0.2);
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+.welcome-text {
+  font-size: 0.7rem;
+  color: #8a7a70;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.user-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-color);
+  font-family: "Playfair Display", serif;
+}
+.user-email {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+/* Auth Promo */
+.sidebar-auth-promo {
+  padding: 40px 25px;
+  text-align: center;
+}
+.sidebar-auth-promo p {
+  margin: 5px 0;
+  font-weight: 600;
+  color: var(--text-color);
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+}
+.promo-sub {
+  font-size: 0.9rem;
+  color: #666;
+  font-family: "DM Sans", sans-serif;
+  margin-bottom: 20px !important;
+}
+.sidebar-login-btn {
+  background: var(--text-color);
+  color: #ffefdd;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  font-family: "DM Sans", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* --- SIMPLE SIDEBAR LINKS --- */
+.sidebar-nav {
+  padding: 10px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar-nav button {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(72, 52, 38, 0.1);
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 18px 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.sidebar-nav button svg {
+  color: #8a7a70;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 30px 25px;
+}
+.sidebar-logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px;
+  background: transparent;
+  color: #d9534f;
+  border: 1px solid #e0caca;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  transition: all 0.2s;
+}
+.sidebar-logout-btn:hover {
+  background: #fff5f5;
+  border-color: #d9534f;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 768px) {
+  .main-header {
+    height: 60px;
+    padding: 0 15px;
   }
 
-  /* 2. Container takes full width, but centers the child */
-  nav {
-    width: 100%;
+  /* FORCE Show Hamburger on Mobile */
+  .mobile-menu-trigger {
+    display: flex !important;
+  }
+
+  /* FORCE Hide Desktop Nav */
+  .desktop-nav,
+  .desktop-actions {
+    display: none !important;
+  }
+
+  /* Logo Fixes */
+  .brand-logo {
+    gap: 8px;
+  }
+  .brand-logo img {
+    height: 35px;
+    width: 35px;
+  }
+  .logo-text {
+    display: flex !important;
+  }
+  .first-letter {
+    font-size: 1.8rem;
+  }
+  .l1 {
+    font-size: 0.9rem;
+  }
+  .l2 {
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+    margin-top: -5px;
+  }
+
+  .header-left {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
     display: flex;
     justify-content: center;
   }
-
-  /* 3. The List: FORCE CENTER */
-  nav ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    width: fit-content;
-    margin: 0 auto;
-    padding: 0 10px;
-
-    justify-content: center;
-    flex-wrap: nowrap !important;
-    gap: 15px; /* Keeps items spaced nicely */
-
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  nav ul::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* 4. Resize Buttons */
-  nav a,
-  .cart-btn,
-  .nav-icon-btn {
-    font-size: 0.85rem;
-    padding: 6px 12px;
-    flex-shrink: 0;
-  }
 }
 
-/* --- Tiny Screens (iPhone SE) --- */
-@media (max-width: 400px) {
-  nav ul {
-    justify-content: flex-start;
-    padding-left: 15px;
-  }
+/* --- Icon with Text Below (For Desktop Header) --- */
+.icon-btn-with-text {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
 
-  nav a,
-  .cart-btn,
-  .nav-icon-btn {
-    font-size: 0.75rem;
-    padding: 5px 8px;
-    gap: 5px;
-  }
+.icon-btn-with-text span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: "DM Sans", sans-serif;
+  opacity: 0.8;
+}
+
+.icon-btn-with-text:hover {
+  background-color: rgba(72, 52, 38, 0.05);
+}
+
+.icon-btn-with-text:hover svg,
+.icon-btn-with-text:hover span {
+  color: var(--accent-gold);
+  opacity: 1;
+}
+
+.logout-btn:hover svg,
+.logout-btn:hover span {
+  color: #d9534f;
 }

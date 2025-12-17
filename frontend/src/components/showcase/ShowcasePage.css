@@ -232,22 +232,30 @@
   color: #666;
 }
 
+/* --- FIXED ADD TO BAG BUTTON --- */
 .bar-btn {
   background: #483426;
   color: white;
-  padding: 15px 40px;
+
+  /* ⚡ FIXED WIDTH LOGIC */
+  padding: 12px 30px; /* Reduced from 15px 40px */
+  min-width: 180px; /* Ensures it's not too small, but not huge */
+
   border-radius: 30px;
   border: none;
   font-family: "Poppins", sans-serif;
   text-transform: uppercase;
+  font-size: 0.9rem; /* Slightly smaller text for elegance */
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .bar-btn:hover {
   background: #2c1f16;
+  transform: translateY(-2px); /* Adds a subtle lift effect */
+  box-shadow: 0 4px 15px rgba(72, 52, 38, 0.3);
 }
 
 .mobile-static-action {
@@ -265,7 +273,18 @@
 }
 
 /* --- MOBILE RESPONSIVENESS --- */
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 900px) {
+  /* 1. Remove massive bottom padding meant for desktop sticky bar */
+  .showcase-container {
+    padding-bottom: 30px;
+  }
+
+  /* 2. Tighter Section Padding */
+  .showcase-details {
+    padding: 40px 5%; /* Was 80px */
+  }
+
   .hero-title {
     font-size: 3rem;
   }
@@ -279,23 +298,35 @@
     font-size: 1.2rem;
   }
 
+  /* Hide Desktop Sticky Bar */
   .sticky-action-bar {
-    display: none; /* Hide sticky bar on mobile, use static bottom btn */
+    display: none;
   }
 
+  /* 3. Mobile Button Container (Less gap) */
   .mobile-static-action {
     display: block;
-    margin-top: 40px;
+    margin-top: 20px; /* Reduced from 40px to fix big gap */
+    margin-bottom: 10px;
   }
 
+  /* 4. The Pill Button Style */
   .full-width-btn {
-    width: 100%;
-    padding: 20px;
+    display: block;
+    width: 90%; /* Prevents touching edges */
+    max-width: 350px; /* Max width for tablets */
+    margin: 0 auto; /* Centering */
+
+    padding: 14px 20px; /* Sleek height */
+
     background: #483426;
     color: white;
     border: none;
-    border-radius: 12px;
-    font-size: 1.1rem;
+    border-radius: 50px; /* Modern Pill Shape */
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     font-family: "Poppins", sans-serif;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   }
 }
