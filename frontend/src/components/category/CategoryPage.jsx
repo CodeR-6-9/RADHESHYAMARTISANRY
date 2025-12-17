@@ -20,7 +20,9 @@ function CategoryPage() {
       try {
         setLoading(true);
         // Fetch all products from your Server
-        const res = await fetch("http://localhost:5000/api/products");
+        const res = await fetch(
+          "https://radheshyam-backend.onrender.com/api/products"
+        );
         const data = await res.json();
         setProducts(data); // Store DB data in state
         setLoading(false);
