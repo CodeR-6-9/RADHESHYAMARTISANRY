@@ -339,11 +339,14 @@ const CheckoutPage = () => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: totals.total }),
-      });
+      const response = await fetch(
+        "https://radheshyam-backend.onrender.com/create-order",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: totals.total }),
+        }
+      );
       if (!response.ok) throw new Error("Server Error");
       const order = await response.json();
       if (!order || !order.id) throw new Error("Invalid Order ID");
@@ -371,11 +374,14 @@ const CheckoutPage = () => {
           };
 
           try {
-            const result = await fetch("http://localhost:5000/verify-payment", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(verifyData),
-            });
+            const result = await fetch(
+              "https://radheshyam-backend.onrender.com/verify-payment",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(verifyData),
+              }
+            );
             const res = await result.json();
 
             if (res.success) {

@@ -10,7 +10,7 @@ const MyOrders = () => {
   useEffect(() => {
     // Only fetch if we have a token (user is logged in)
     if (token) {
-      fetch("http://localhost:5000/my-orders", {
+      fetch("https://radheshyam-backend.onrender.com/my-orders", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())

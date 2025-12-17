@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      fetch("http://localhost:5000/auth/user", {
+      fetch("https://radheshyam-backend.onrender.com/auth/user", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await fetch("http://localhost:5000/login", {
+    const res = await fetch("https://radheshyam-backend.onrender.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -44,11 +44,14 @@ export const AuthProvider = ({ children }) => {
   // --- NEW: GOOGLE LOGIN FUNCTION ---
   const googleLogin = async (googleToken) => {
     try {
-      const res = await fetch("http://localhost:5000/google-login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: googleToken }),
-      });
+      const res = await fetch(
+        "https://radheshyam-backend.onrender.com/google-login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: googleToken }),
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem("token", data.token);
@@ -65,11 +68,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    const res = await fetch("http://localhost:5000/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
+    const res = await fetch(
+      "https://radheshyam-backend.onrender.com/register",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      }
+    );
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem("token", data.token);

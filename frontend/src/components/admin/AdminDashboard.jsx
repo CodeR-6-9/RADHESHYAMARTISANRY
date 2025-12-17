@@ -40,7 +40,9 @@ const AdminDashboard = () => {
   // --- API CALLS ---
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products");
+      const res = await fetch(
+        "https://radheshyam-backend.onrender.com/api/products"
+      );
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -51,9 +53,12 @@ const AdminDashboard = () => {
   const fetchOrders = async () => {
     if (!token) return;
     try {
-      const res = await fetch("http://localhost:5000/orders", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://radheshyam-backend.onrender.com/orders",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       setOrders(data);
     } catch (err) {
@@ -102,14 +107,17 @@ const AdminDashboard = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(finalProduct),
-      });
+      const res = await fetch(
+        "https://radheshyam-backend.onrender.com/api/products",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(finalProduct),
+        }
+      );
 
       if (res.ok) {
         alert("✅ Product Added!");
@@ -135,7 +143,7 @@ const AdminDashboard = () => {
 
   const handleDeleteProduct = async (id) => {
     if (!window.confirm("⚠️ Delete this product?")) return;
-    await fetch(`http://localhost:5000/api/products/${id}`, {
+    await fetch(`https://radheshyam-backend.onrender.com/api/products/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

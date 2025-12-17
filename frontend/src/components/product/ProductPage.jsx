@@ -79,7 +79,7 @@ const RelatedProducts = ({ currentCategory, currentProductId }) => {
 
   useEffect(() => {
     // 1. Fetch all products
-    fetch("http://localhost:5000/api/products")
+    fetch("https://radheshyam-backend.onrender.com/api/products")
       .then((res) => res.json())
       .then((data) => {
         // 2. Filter: Same Category & Not Current Product
@@ -234,7 +234,9 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(
+          `https://radheshyam-backend.onrender.com/api/products/${id}`
+        );
         if (!res.ok) throw new Error("Product not found");
 
         const data = await res.json();

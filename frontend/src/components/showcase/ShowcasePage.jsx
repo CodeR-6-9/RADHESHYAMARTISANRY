@@ -32,7 +32,9 @@ const ShowcasePage = () => {
       try {
         setLoading(true);
         // Fetch from Backend
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(
+          `https://radheshyam-backend.onrender.com/api/products/${id}`
+        );
         if (!res.ok) throw new Error("Product not found");
 
         const data = await res.json();
