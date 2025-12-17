@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import logo1 from "../../assets/logo1.jpg";
 import SearchOverlay from "../search/SearchOverlay";
-import "./Header.css";
+import "./header.css";
 
 function Header() {
   const { cartItems, setIsCartOpen } = useCart();
