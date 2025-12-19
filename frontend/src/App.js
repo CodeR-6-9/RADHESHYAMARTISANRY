@@ -22,7 +22,7 @@ import ShippingPolicy from "./components/legal/ShippingPolicy";
 import RefundPolicy from "./components/legal/RefundPolicy";
 import Terms from "./components/legal/Terms";
 import PrivacyPolicy from "./components/legal/PrivacyPolicy";
-import Footer from "./components/footer/Footer";
+import Footer from "./components/footer/footer";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
