@@ -229,6 +229,9 @@ app.get("/orders", auth, admin, async (req, res) => {
     res.status(500).json({ message: "Error fetching orders" });
   }
 });
+app.get("/", (req, res) => {
+  res.send("Radheshyam Backend is Running!");
+});
 
 // --- USE PRODUCT ROUTES ---
 app.use("/api/products", productRoutes);
